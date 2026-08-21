@@ -26,3 +26,35 @@ class Viagem(models.Model):
     valor_frete = models.FloatField()
     valor_resultado = models.FloatField()
     status = models.CharField(max_length=50)
+
+
+class Veiculo(models.Model):
+    placa = models.CharField(max_length=10)
+    modelo = models.CharField(max_length=100)
+    marca = models.CharField(max_length=100)
+    ano = models.IntegerField()
+    quilometragem = models.FloatField()
+    status = models.CharField(max_length=50)
+    capacidade_carga = models.FloatField()
+
+
+class Abastecimento(models.Model):
+    veiculo = models.ForeignKey(
+        Veiculo,
+        on_delete=models.CASCADE
+    )
+    litros = models.FloatField()
+    valor = models.FloatField()
+    data = models.DateField()
+    tipo_combustivel = models.CharField(max_length=50)
+
+
+class Manutencao(models.Model):
+    veiculo = models.ForeignKey(
+        Veiculo,
+        on_delete=models.CASCADE
+    )
+    tipo = models.CharField(max_length=100)
+    descricao = models.CharField(max_length=255)
+    data = models.DateField()
+    valor = models.FloatField()
