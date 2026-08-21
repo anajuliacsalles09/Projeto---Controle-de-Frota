@@ -27,7 +27,8 @@ class Viagem(models.Model):
     valor_resultado = models.FloatField()
     status = models.CharField(max_length=50)
 
- class Veiculo(models.Model):
+
+class Veiculo(models.Model):
     placa = models.CharField(max_length=10)
     modelo = models.CharField(max_length=100)
     marca = models.CharField(max_length=100)
