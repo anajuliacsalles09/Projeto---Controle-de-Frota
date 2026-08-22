@@ -58,3 +58,24 @@ class Manutencao(models.Model):
     descricao = models.CharField(max_length=255)
     data = models.DateField()
     valor = models.FloatField()
+
+class Carga(models.Model):
+    viagem = models.ForeignKey(
+        Viagem,
+        on_delete=models.CASCADE
+    )
+    descricao = models.CharField(max_length=255)
+    peso = models.FloatField()
+    valor = models.FloatField()
+    observacao = models.CharField(max_length=255)
+
+
+class Despesa(models.Model):
+    viagem = models.ForeignKey(
+        Viagem,
+        on_delete=models.CASCADE
+    )
+    tipo = models.CharField(max_length=100)
+    descricao = models.CharField(max_length=255)
+    valor = models.FloatField()
+    data = models.DateField()
