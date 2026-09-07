@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Veículo</title>
+</head>
+<body>
+
+    <h1>Editar Veículo</h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <p>
+            <label>Placa:</label>
+            <input type="text" name="placa" value="{{ veiculo.placa }}">
+        </p>
+
+        <p>
+            <label>Modelo:</label>
+            <input type="text" name="modelo" value="{{ veiculo.modelo }}">
+        </p>
+
+        <p>
+            <label>Marca:</label>
+            <input type="text" name="marca" value="{{ veiculo.marca }}">
+        </p>
+
+        <p>
+            <label>Ano:</label>
+            <input type="number" name="ano" value="{{ veiculo.ano }}">
+        </p>
+
+        <p>
+            <label>Quilometragem:</label>
+            <input type="number" step="0.01" name="quilometragem" value="{{ veiculo.quilometragem }}">
+        </p>
+
+        <p>
+            <label>Status:</label>
+            <input type="text" name="status" value="{{ veiculo.status }}">
+        </p>
+
+        <p>
+            <label>Capacidade de carga:</label>
+            <input type="number" step="0.01" name="capacidade_carga" value="{{ veiculo.capacidade_carga }}">
+        </p>
+
+        <button type="submit">Salvar alterações</button>
+
+    </form>
+
+</body>
+</html>

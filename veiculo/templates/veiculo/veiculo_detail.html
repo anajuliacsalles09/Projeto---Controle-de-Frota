@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Veículo</title>
+</head>
+
+<body>
+
+    <h1>Detalhes do Veículo</h1>
+
+    <p>Placa: {{ veiculo.placa }}</p>
+    <p>Modelo: {{ veiculo.modelo }}</p>
+    <p>Marca: {{ veiculo.marca }}</p>
+    <p>Ano: {{ veiculo.ano }}</p>
+    <p>Quilometragem: {{ veiculo.quilometragem }}</p>
+    <p>Status: {{ veiculo.status }}</p>
+    <p>Capacidade de carga: {{ veiculo.capacidade_carga }}</p>
+
+    <br>
+
+    <a href="{% url 'veiculo_update' veiculo.id %}">
+        Editar veículo
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'veiculo_delete' veiculo.id %}">
+        Excluir veículo
+    </a>
+
+</body>
+
+</html>

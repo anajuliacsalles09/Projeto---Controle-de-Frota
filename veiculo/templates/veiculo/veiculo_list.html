@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Veículos</title>
+</head>
+<body>
+
+    <h1>Lista de Veículos</h1>
+
+    {% for veiculo in objetos %}
+
+        <p>
+            Placa: {{ veiculo.placa }}
+            - Modelo: {{ veiculo.modelo }}
+            - Marca: {{ veiculo.marca }}
+
+            <a href="{% url 'veiculo_detail' veiculo.id %}">
+                Ver detalhes
+            </a>
+        </p>
+
+    {% empty %}
+
+        <p>Nenhum veículo cadastrado.</p>
+
+    {% endfor %}
+
+</body>
+</html>
