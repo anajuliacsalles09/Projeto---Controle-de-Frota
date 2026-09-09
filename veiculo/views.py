@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from .forms import VeiculoForm
 from .models import Veiculo
 
 
@@ -55,3 +56,26 @@ def veiculo_delete(request, id):
     return render(request, 'veiculo/veiculo_delete.html', {
         'veiculo': veiculo
     })
+
+
+def veiculo_create(request):
+    if request.method == 'POST':
+        form = VeiculoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return render(
+                request,
+                'veiculo/veiculo_list.html',
+                {'objetos': Veiculo.objects.all()}
+            )
+
+    else:
+        form = VeiculoForm()
+
+    return render(
+        request,
+        'veiculo/veiculo_form.html',
+        {'form': form}
+    )
