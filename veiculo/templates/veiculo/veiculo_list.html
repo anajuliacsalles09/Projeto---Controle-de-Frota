@@ -1,24 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Veículos</title>
+    <title>Lista de Veículos</title>
 </head>
 <body>
 
     <h1>Lista de Veículos</h1>
 
-    {% for veiculo in objetos %}
+    <a href="{% url 'veiculo_create' %}">
+        Criar novo veículo
+    </a>
+
+    <hr>
+
+    {% for objeto in objetos %}
+
+        <h2>Veículo {{ objeto.id }}</h2>
 
         <p>
-            Placa: {{ veiculo.placa }}
-            - Modelo: {{ veiculo.modelo }}
-            - Marca: {{ veiculo.marca }}
-
-            <a href="{% url 'veiculo_detail' veiculo.id %}">
-                Ver detalhes
-            </a>
+            <strong>Placa:</strong>
+            {{ objeto.placa }}
         </p>
+
+        <p>
+            <strong>Modelo:</strong>
+            {{ objeto.modelo }}
+        </p>
+
+        <p>
+            <strong>Marca:</strong>
+            {{ objeto.marca }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ objeto.status }}
+        </p>
+
+        <a href="{% url 'veiculo_detail' objeto.pk %}">
+            Ver detalhes
+        </a>
+
+        |
+
+        <a href="{% url 'veiculo_update' objeto.pk %}">
+            Editar
+        </a>
+
+        |
+
+        <a href="{% url 'veiculo_delete' objeto.pk %}">
+            Excluir
+        </a>
+
+        <hr>
 
     {% empty %}
 

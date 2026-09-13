@@ -1,34 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Excluir Veículo</title>
 </head>
-
 <body>
 
     <h1>Excluir Veículo</h1>
 
     <p>
-        Tem certeza que deseja excluir o veículo
-        {{ veiculo.placa }}?
+        Tem certeza que deseja excluir este veículo?
     </p>
 
-    <form method="post">
+    <p>
+        <strong>Placa:</strong>
+        {{ objeto.placa }}
+        <br>
+
+        <strong>Modelo:</strong>
+        {{ objeto.modelo }}
+        <br>
+
+        <strong>Marca:</strong>
+        {{ objeto.marca }}
+    </p>
+
+    <form method="POST">
 
         {% csrf_token %}
 
-        <button type="submit">Sim, excluir</button>
+        <button type="submit">
+            Sim, excluir
+        </button>
 
     </form>
 
     <br>
 
-    <a href="{% url 'veiculo_detail' veiculo.id %}">
+    <a href="{% url 'veiculo_detail' objeto.pk %}">
         Cancelar
     </a>
 
 </body>
-
 </html>

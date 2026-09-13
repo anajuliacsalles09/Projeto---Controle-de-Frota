@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Veiculo
+from .forms import VeiculoForm
 
 
 def veiculo_list(request):
@@ -11,47 +12,56 @@ def veiculo_list(request):
     })
 
 
-def veiculo_detail(request, id):
-    veiculo = Veiculo.objects.get(id=id)
+def veiculo_create(request):
+    if request.method == 'POST':
+        form = VeiculoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('veiculo_list')
+
+    else:
+        form = VeiculoForm()
+
+    return render(request, 'veiculo/veiculo_create.html', {
+        'form': form
+    })
+
+
+def veiculo_detail(request, pk):
+    objeto = get_object_or_404(Veiculo, pk=pk)
 
     return render(request, 'veiculo/veiculo_detail.html', {
-        'veiculo': veiculo
+        'objeto': objeto
     })
 
 
-def veiculo_update(request, id):
-    veiculo = Veiculo.objects.get(id=id)
+def veiculo_update(request, pk):
+    objeto = get_object_or_404(Veiculo, pk=pk)
 
     if request.method == 'POST':
-        veiculo.placa = request.POST['placa']
-        veiculo.modelo = request.POST['modelo']
-        veiculo.marca = request.POST['marca']
-        veiculo.ano = request.POST['ano']
-        veiculo.quilometragem = request.POST['quilometragem']
-        veiculo.status = request.POST['status']
-        veiculo.capacidade_carga = request.POST['capacidade_carga']
+        form = VeiculoForm(request.POST, instance=objeto)
 
-        veiculo.save()
+        if form.is_valid():
+            form.save()
+            return redirect('veiculo_detail', pk=objeto.pk)
 
-        return render(request, 'veiculo/veiculo_detail.html', {
-            'veiculo': veiculo
-        })
+    else:
+        form = VeiculoForm(instance=objeto)
 
     return render(request, 'veiculo/veiculo_update.html', {
-        'veiculo': veiculo
+        'form': form,
+        'objeto': objeto
     })
 
 
-def veiculo_delete(request, id):
-    veiculo = Veiculo.objects.get(id=id)
+def veiculo_delete(request, pk):
+    objeto = get_object_or_404(Veiculo, pk=pk)
 
     if request.method == 'POST':
-        veiculo.delete()
-
-        return render(request, 'veiculo/veiculo_list.html', {
-            'objetos': Veiculo.objects.all()
-        })
+        objeto.delete()
+        return redirect('veiculo_list')
 
     return render(request, 'veiculo/veiculo_delete.html', {
-        'veiculo': veiculo
+        'objeto': objeto
     })

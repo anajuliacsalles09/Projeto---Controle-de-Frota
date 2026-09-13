@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes da Viagem</title>
+</head>
+<body>
+
+    <h1>Detalhes da Viagem</h1>
+
+    <p><strong>ID:</strong> {{ objeto.id }}</p>
+
+    <p><strong>Usuário:</strong> {{ objeto.usuario }}</p>
+
+    <p><strong>Veículo:</strong> {{ objeto.veiculo }}</p>
+
+    <p><strong>Origem:</strong> {{ objeto.origem }}</p>
+
+    <p><strong>Destino:</strong> {{ objeto.destino }}</p>
+
+    <p><strong>Data de saída:</strong> {{ objeto.data_saida }}</p>
+
+    <p><strong>Data de retorno:</strong> {{ objeto.data_retorno }}</p>
+
+    <p><strong>Distância:</strong> {{ objeto.distancia }}</p>
+
+    <p><strong>Valor do frete:</strong> {{ objeto.valor_frete }}</p>
+
+    <p><strong>Valor resultado:</strong> {{ objeto.valor_resultado }}</p>
+
+    <p><strong>Status:</strong> {{ objeto.status }}</p>
+
+    <hr>
+
+    <a href="{% url 'viagem_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'viagem_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'viagem_list' %}">
+        Voltar para viagens
+    </a>
+
+</body>
+</html>

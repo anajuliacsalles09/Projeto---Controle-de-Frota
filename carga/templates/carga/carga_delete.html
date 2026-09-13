@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excluir Carga</title>
+</head>
+<body>
+
+    <h1>Excluir Carga</h1>
+
+    <p>
+        Tem certeza que deseja excluir esta carga?
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        {{ objeto.descricao }}
+        <br>
+
+        <strong>Peso:</strong>
+        {{ objeto.peso }}
+        <br>
+
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button type="submit">
+            Sim, excluir
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="{% url 'carga_detail' objeto.pk %}">
+        Cancelar
+    </a>
+
+</body>
+</html>

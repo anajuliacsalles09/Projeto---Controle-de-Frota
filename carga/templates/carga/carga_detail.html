@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes da Carga</title>
+</head>
+<body>
+
+    <h1>Detalhes da Carga</h1>
+
+    <p>
+        <strong>ID:</strong>
+        {{ objeto.id }}
+    </p>
+
+    <p>
+        <strong>Viagem:</strong>
+        {{ objeto.viagem }}
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        {{ objeto.descricao }}
+    </p>
+
+    <p>
+        <strong>Peso:</strong>
+        {{ objeto.peso }}
+    </p>
+
+    <p>
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+    </p>
+
+    <p>
+        <strong>Observação:</strong>
+        {{ objeto.observacao }}
+    </p>
+
+    <br>
+
+    <a href="{% url 'carga_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'carga_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'carga_list' %}">
+        Voltar para a lista
+    </a>
+
+</body>
+</html>
