@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excluir Usuário</title>
+</head>
+<body>
+
+    <h1>Excluir Usuário</h1>
+
+    <p>
+        Tem certeza que deseja excluir este usuário?
+    </p>
+
+    <p>
+        <strong>Nome:</strong>
+        {{ objeto.nome }}
+    </p>
+
+    <p>
+        <strong>CPF:</strong>
+        {{ objeto.cpf }}
+    </p>
+
+    <p>
+        <strong>Telefone:</strong>
+        {{ objeto.telefone }}
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit">
+            Sim, excluir
+        </button>
+
+        <a href="{% url 'usuario_detail' objeto.pk %}">
+            Cancelar
+        </a>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Excluir Viagem</title>
+</head>
+<body>
+
+```
+<h1>Excluir Viagem</h1>
+
+<p>
+    Tem certeza que deseja excluir esta viagem?
+</p>
+
+<p>
+    <strong>Origem:</strong> {{ objeto.origem }}
+</p>
+
+<p>
+    <strong>Destino:</strong> {{ objeto.destino }}
+</p>
+
+<p>
+    <strong>Data de saída:</strong> {{ objeto.data_saida }}
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <button type="submit">
+        Sim, excluir
+    </button>
+
+    <a href="{% url 'viagem_detail' objeto.pk %}">
+        Cancelar
+    </a>
+</form>
+```
+
+</body>
+</html>

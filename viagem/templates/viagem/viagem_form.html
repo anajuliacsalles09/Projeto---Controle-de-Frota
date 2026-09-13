@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Viagem</title>
+</head>
+<body>
+
+```
+<h1>Viagem</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Salvar
+    </button>
+</form>
+
+<br>
+
+<a href="{% url 'viagem_list' %}">
+    Voltar para a lista
+</a>
+```
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Usuário</title>
+</head>
+<body>
+
+    <h1>Detalhes do Usuário</h1>
+
+    <p>
+        <strong>Nome:</strong>
+        {{ objeto.nome }}
+    </p>
+
+    <p>
+        <strong>CPF:</strong>
+        {{ objeto.cpf }}
+    </p>
+
+    <p>
+        <strong>Telefone:</strong>
+        {{ objeto.telefone }}
+    </p>
+
+    <p>
+        <strong>Rua:</strong>
+        {{ objeto.rua }}
+    </p>
+
+    <p>
+        <strong>Bairro:</strong>
+        {{ objeto.bairro }}
+    </p>
+
+    <p>
+        <strong>CEP:</strong>
+        {{ objeto.cep }}
+    </p>
+
+    <p>
+        <strong>Número:</strong>
+        {{ objeto.numero }}
+    </p>
+
+    <p>
+        <strong>Logradouro:</strong>
+        {{ objeto.logradouro }}
+    </p>
+
+    <hr>
+
+    <a href="{% url 'usuario_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'usuario_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'usuario_list' %}">
+        Voltar para a lista
+    </a>
+
+</body>
+</html>
