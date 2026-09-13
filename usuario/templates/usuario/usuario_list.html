@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+</head>
+<body>
+
+    <h1>Usuários cadastrados</h1>
+
+    <a href="{% url 'usuario_create' %}">Cadastrar novo usuário</a>
+
+    <hr>
+
+    {% for usuario in objetos %}
+
+        <div>
+            <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+            <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+            <p><strong>Telefone:</strong> {{ usuario.telefone }}</p>
+            <p><strong>Rua:</strong> {{ usuario.rua }}</p>
+            <p><strong>Bairro:</strong> {{ usuario.bairro }}</p>
+            <p><strong>CEP:</strong> {{ usuario.cep }}</p>
+            <p><strong>Número:</strong> {{ usuario.numero }}</p>
+            <p><strong>Logradouro:</strong> {{ usuario.logradouro }}</p>
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Nenhum usuário cadastrado.</p>
+
+    {% endfor %}
+
+</body>
+</html>

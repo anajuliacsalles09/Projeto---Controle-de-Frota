@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Abastecimentos</title>
+</head>
+<body>
+
+    <h1>Abastecimentos cadastrados</h1>
+
+    <a href="{% url 'abastecimento_create' %}">Cadastrar novo abastecimento</a>
+
+    <hr>
+
+    {% for abastecimento in objetos %}
+
+        <div>
+            <p><strong>Veículo:</strong> {{ abastecimento.veiculo }}</p>
+            <p><strong>Litros:</strong> {{ abastecimento.litros }}</p>
+            <p><strong>Valor:</strong> {{ abastecimento.valor }}</p>
+            <p><strong>Data:</strong> {{ abastecimento.data }}</p>
+            <p><strong>Tipo de combustível:</strong> {{ abastecimento.tipo_combustivel }}</p>
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Nenhum abastecimento cadastrado.</p>
+
+    {% endfor %}
+
+</body>
+</html>
