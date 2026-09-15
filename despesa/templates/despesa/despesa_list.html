@@ -1,26 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Despesas</title>
+    <title>Lista de Despesas</title>
 </head>
 <body>
 
-    <h1>Despesas cadastradas</h1>
+    <h1>Lista de Despesas</h1>
 
-    <a href="{% url 'despesa_create' %}">Cadastrar nova despesa</a>
+    <a href="{% url 'despesa_create' %}">
+        Criar nova despesa
+    </a>
 
     <hr>
 
-    {% for despesa in objetos %}
+    {% for objeto in objetos %}
 
-        <div>
-            <p><strong>Viagem:</strong> {{ despesa.viagem }}</p>
-            <p><strong>Tipo:</strong> {{ despesa.tipo }}</p>
-            <p><strong>Descrição:</strong> {{ despesa.descricao }}</p>
-            <p><strong>Valor:</strong> {{ despesa.valor }}</p>
-            <p><strong>Data:</strong> {{ despesa.data }}</p>
-        </div>
+        <h2>Despesa {{ objeto.id }}</h2>
+
+        <p>
+            <strong>Viagem:</strong>
+            {{ objeto.viagem }}
+        </p>
+
+        <p>
+            <strong>Tipo:</strong>
+            {{ objeto.tipo }}
+        </p>
+
+        <p>
+            <strong>Descrição:</strong>
+            {{ objeto.descricao }}
+        </p>
+
+        <p>
+            <strong>Valor:</strong>
+            {{ objeto.valor }}
+        </p>
+
+        <p>
+            <strong>Data:</strong>
+            {{ objeto.data }}
+        </p>
+
+        <a href="{% url 'despesa_detail' objeto.pk %}">
+            Ver detalhes
+        </a>
+
+        |
+
+        <a href="{% url 'despesa_update' objeto.pk %}">
+            Editar
+        </a>
+
+        |
+
+        <a href="{% url 'despesa_delete' objeto.pk %}">
+            Excluir
+        </a>
 
         <hr>
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excluir Abastecimento</title>
+</head>
+<body>
+
+    <h1>Excluir Abastecimento</h1>
+
+    <p>
+        Tem certeza que deseja excluir este abastecimento?
+    </p>
+
+    <p>
+        <strong>Veículo:</strong>
+        {{ objeto.veiculo }}
+        <br>
+
+        <strong>Litros:</strong>
+        {{ objeto.litros }}
+        <br>
+
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+        <br>
+
+        <strong>Data:</strong>
+        {{ objeto.data }}
+        <br>
+
+        <strong>Tipo de combustível:</strong>
+        {{ objeto.tipo_combustivel }}
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button type="submit">
+            Sim, excluir
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="{% url 'abastecimento_detail' objeto.pk %}">
+        Cancelar
+    </a>
+
+</body>
+</html>

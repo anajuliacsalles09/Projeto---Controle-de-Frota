@@ -14,19 +14,23 @@
 
     {% for manutencao in objetos %}
 
-        <div>
-            <p><strong>Veículo:</strong> {{ manutencao.veiculo }}</p>
-            <p><strong>Tipo:</strong> {{ manutencao.tipo }}</p>
-            <p><strong>Descrição:</strong> {{ manutencao.descricao }}</p>
-            <p><strong>Data:</strong> {{ manutencao.data }}</p>
-            <p><strong>Valor:</strong> {{ manutencao.valor }}</p>
-        </div>
+    <div>
+        <p><strong>Veículo:</strong> {{ manutencao.veiculo }}</p>
+        <p><strong>Tipo:</strong> {{ manutencao.tipo }}</p>
+        <p><strong>Descrição:</strong> {{ manutencao.descricao }}</p>
+        <p><strong>Data:</strong> {{ manutencao.data }}</p>
+        <p><strong>Valor:</strong> {{ manutencao.valor }}</p>
 
-        <hr>
+        <a href="{% url 'manutencao_detail' manutencao.pk %}">
+            Ver detalhes
+        </a>
+    </div>
+
+    <hr>
 
     {% empty %}
 
-        <p>Nenhuma manutenção cadastrada.</p>
+    <p>Nenhuma manutenção cadastrada.</p>
 
     {% endfor %}
 

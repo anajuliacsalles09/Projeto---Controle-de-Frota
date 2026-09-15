@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excluir Despesa</title>
+</head>
+<body>
+
+    <h1>Excluir Despesa</h1>
+
+    <p>
+        Tem certeza que deseja excluir esta despesa?
+    </p>
+
+    <p>
+        <strong>Viagem:</strong>
+        {{ objeto.viagem }}
+        <br>
+
+        <strong>Tipo:</strong>
+        {{ objeto.tipo }}
+        <br>
+
+        <strong>Descrição:</strong>
+        {{ objeto.descricao }}
+        <br>
+
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+        <br>
+
+        <strong>Data:</strong>
+        {{ objeto.data }}
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <button type="submit">
+            Sim, excluir
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="{% url 'despesa_detail' objeto.pk %}">
+        Cancelar
+    </a>
+
+</body>
+</html>

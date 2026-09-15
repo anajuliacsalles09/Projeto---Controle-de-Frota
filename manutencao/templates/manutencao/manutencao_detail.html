@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes da Manutenção</title>
+</head>
+<body>
+
+    <h1>Detalhes da Manutenção</h1>
+
+    <p>
+        <strong>Veículo:</strong>
+        {{ objeto.veiculo }}
+    </p>
+
+    <p>
+        <strong>Tipo:</strong>
+        {{ objeto.tipo }}
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        {{ objeto.descricao }}
+    </p>
+
+    <p>
+        <strong>Data:</strong>
+        {{ objeto.data }}
+    </p>
+
+    <p>
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+    </p>
+
+    <br>
+
+    <a href="{% url 'manutencao_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'manutencao_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'manutencao_list' %}">
+        Voltar para a lista
+    </a>
+
+</body>
+</html>

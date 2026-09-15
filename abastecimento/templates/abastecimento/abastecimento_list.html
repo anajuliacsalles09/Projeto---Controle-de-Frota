@@ -1,26 +1,62 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Abastecimentos</title>
+    <title>Lista de Abastecimentos</title>
 </head>
 <body>
 
-    <h1>Abastecimentos cadastrados</h1>
+    <h1>Lista de Abastecimentos</h1>
 
-    <a href="{% url 'abastecimento_create' %}">Cadastrar novo abastecimento</a>
+    <a href="{% url 'abastecimento_create' %}">
+        Criar novo abastecimento
+    </a>
 
     <hr>
 
-    {% for abastecimento in objetos %}
+    {% for objeto in objetos %}
 
-        <div>
-            <p><strong>Veículo:</strong> {{ abastecimento.veiculo }}</p>
-            <p><strong>Litros:</strong> {{ abastecimento.litros }}</p>
-            <p><strong>Valor:</strong> {{ abastecimento.valor }}</p>
-            <p><strong>Data:</strong> {{ abastecimento.data }}</p>
-            <p><strong>Tipo de combustível:</strong> {{ abastecimento.tipo_combustivel }}</p>
-        </div>
+        <h2>Abastecimento {{ objeto.id }}</h2>
+
+        <p>
+            <strong>Veículo:</strong>
+            {{ objeto.veiculo }}
+        </p>
+
+        <p>
+            <strong>Litros:</strong>
+            {{ objeto.litros }}
+        </p>
+
+        <p>
+            <strong>Valor:</strong>
+            {{ objeto.valor }}
+        </p>
+
+        <p>
+            <strong>Data:</strong>
+            {{ objeto.data }}
+        </p>
+
+        <p>
+            <strong>Tipo de combustível:</strong>
+            {{ objeto.tipo_combustivel }}
+        </p>
+
+        <a href="{% url 'abastecimento_detail' objeto.pk %}">
+            Ver detalhes
+        </a>
+
+        |
+
+        <a href="{% url 'abastecimento_update' objeto.pk %}">
+            Editar
+        </a>
+
+        |
+
+        <a href="{% url 'abastecimento_delete' objeto.pk %}">
+            Excluir
+        </a>
 
         <hr>
 

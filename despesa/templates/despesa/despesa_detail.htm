@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes da Despesa</title>
+</head>
+<body>
+
+    <h1>Detalhes da Despesa</h1>
+
+    <p>
+        <strong>ID:</strong>
+        {{ objeto.id }}
+    </p>
+
+    <p>
+        <strong>Viagem:</strong>
+        {{ objeto.viagem }}
+    </p>
+
+    <p>
+        <strong>Tipo:</strong>
+        {{ objeto.tipo }}
+    </p>
+
+    <p>
+        <strong>Descrição:</strong>
+        {{ objeto.descricao }}
+    </p>
+
+    <p>
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+    </p>
+
+    <p>
+        <strong>Data:</strong>
+        {{ objeto.data }}
+    </p>
+
+    <br>
+
+    <a href="{% url 'despesa_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'despesa_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'despesa_list' %}">
+        Voltar para a lista
+    </a>
+
+</body>
+</html>

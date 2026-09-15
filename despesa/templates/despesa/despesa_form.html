@@ -8,15 +8,23 @@
 
     <h1>Cadastrar Despesa</h1>
 
-    <form method="post">
+    <form method="POST">
+
         {% csrf_token %}
 
         {{ form.as_p }}
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">
+            Salvar
+        </button>
+
     </form>
 
-    <a href="{% url 'despesa_list' %}">Voltar para a lista</a>
+    <br>
+
+    <a href="{% url 'despesa_list' %}">
+        Voltar para a lista
+    </a>
 
 </body>
 </html>

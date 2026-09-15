@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detalhes do Abastecimento</title>
+</head>
+<body>
+
+    <h1>Detalhes do Abastecimento</h1>
+
+    <p>
+        <strong>ID:</strong>
+        {{ objeto.id }}
+    </p>
+
+    <p>
+        <strong>Veículo:</strong>
+        {{ objeto.veiculo }}
+    </p>
+
+    <p>
+        <strong>Litros:</strong>
+        {{ objeto.litros }}
+    </p>
+
+    <p>
+        <strong>Valor:</strong>
+        {{ objeto.valor }}
+    </p>
+
+    <p>
+        <strong>Data:</strong>
+        {{ objeto.data }}
+    </p>
+
+    <p>
+        <strong>Tipo de combustível:</strong>
+        {{ objeto.tipo_combustivel }}
+    </p>
+
+    <br>
+
+    <a href="{% url 'abastecimento_update' objeto.pk %}">
+        Editar
+    </a>
+
+    |
+
+    <a href="{% url 'abastecimento_delete' objeto.pk %}">
+        Excluir
+    </a>
+
+    |
+
+    <a href="{% url 'abastecimento_list' %}">
+        Voltar para a lista
+    </a>
+
+</body>
+</html>
