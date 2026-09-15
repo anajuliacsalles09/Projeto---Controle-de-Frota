@@ -23,10 +23,9 @@ def carga_create(request):
     else:
         form = CargaForm()
 
-    return render(request, 'carga/carga_create.html', {
+    return render(request, 'carga/carga_form.html', {
         'form': form
     })
-
 
 def carga_detail(request, pk):
     objeto = get_object_or_404(Carga, pk=pk)

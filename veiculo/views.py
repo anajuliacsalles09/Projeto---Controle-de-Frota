@@ -23,7 +23,7 @@ def veiculo_create(request):
     else:
         form = VeiculoForm()
 
-    return render(request, 'veiculo/veiculo_create.html', {
+    return render(request, 'veiculo/veiculo_form.html', {
         'form': form
     })
 
