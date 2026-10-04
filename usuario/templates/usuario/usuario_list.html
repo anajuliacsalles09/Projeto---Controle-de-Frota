@@ -1,55 +1,43 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
 <head>
     <title>Lista de Usuários</title>
 </head>
 <body>
-
-    <h1>Lista de Usuários</h1>
-
-    <a href="{% url 'usuario_create' %}">
-        Cadastrar novo usuário
+<h1>Lista de Usuários</h1>
+<form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Sair</button>
+</form>
+<hr>
+<a href="{% url 'usuario_create' %}">
+    Cadastrar novo usuário
+</a>
+<hr>
+{% for objeto in objetos %}
+    <h2>{{ objeto.nome }}</h2>
+    <p>
+        <strong>CPF:</strong>
+        {{ objeto.cpf }}
+    </p>
+    <p>
+        <strong>Telefone:</strong>
+        {{ objeto.telefone }}
+    </p>
+    <a href="{% url 'usuario_detail' objeto.pk %}">
+        Ver detalhes
     </a>
-
+    |
+    <a href="{% url 'usuario_update' objeto.pk %}">
+        Editar
+    </a>
+    |
+    <a href="{% url 'usuario_delete' objeto.pk %}">
+        Excluir
+    </a>
     <hr>
-
-    {% for objeto in objetos %}
-
-        <h2>{{ objeto.nome }}</h2>
-
-        <p>
-            <strong>CPF:</strong>
-            {{ objeto.cpf }}
-        </p>
-
-        <p>
-            <strong>Telefone:</strong>
-            {{ objeto.telefone }}
-        </p>
-
-        <a href="{% url 'usuario_detail' objeto.pk %}">
-            Ver detalhes
-        </a>
-
-        |
-
-        <a href="{% url 'usuario_update' objeto.pk %}">
-            Editar
-        </a>
-
-        |
-
-        <a href="{% url 'usuario_delete' objeto.pk %}">
-            Excluir
-        </a>
-
-        <hr>
-
-    {% empty %}
-
-        <p>Nenhum usuário cadastrado.</p>
-
-    {% endfor %}
-
+{% empty %}
+    <p>Nenhum usuário cadastrado.</p>
+{% endfor %}
 </body>
 </html>

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import Usuario
 from .forms import UsuarioForm
 
 
+@login_required
 def usuario_list(request):
     objetos = Usuario.objects.all()
 
@@ -20,16 +21,8 @@ def usuario_create(request):
         form = UsuarioForm(request.POST)
 
         if form.is_valid():
-            user = User.objects.create_user(
-                username=form.cleaned_data['cpf'],
-                password='123456'
-            )
-
-            usuario = form.save(commit=False)
-            usuario.user_ptr = user
-            usuario.save()
-
-            return redirect('usuario_list')
+            form.save()
+            return redirect('login')
 
     else:
         form = UsuarioForm()
@@ -41,6 +34,7 @@ def usuario_create(request):
     )
 
 
+@login_required
 def usuario_detail(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 
@@ -51,6 +45,7 @@ def usuario_detail(request, pk):
     )
 
 
+@login_required
 def usuario_update(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 
@@ -58,11 +53,7 @@ def usuario_update(request, pk):
         form = UsuarioForm(request.POST, instance=objeto)
 
         if form.is_valid():
-            usuario = form.save()
-
-            usuario.user_ptr.username = form.cleaned_data['cpf']
-            usuario.user_ptr.save()
-
+            form.save()
             return redirect('usuario_detail', pk=objeto.pk)
 
     else:
@@ -78,15 +69,12 @@ def usuario_update(request, pk):
     )
 
 
+@login_required
 def usuario_delete(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 
     if request.method == 'POST':
-        user = objeto.user_ptr
-
         objeto.delete()
-        user.delete()
-
         return redirect('usuario_list')
 
     return render(

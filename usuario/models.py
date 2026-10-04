@@ -9,6 +9,6 @@ class Usuario(User):
     telefone = models.CharField(max_length=20)
     rua = models.CharField(max_length=100)
     bairro = models.CharField(max_length=100)
-    cep = models.IntegerField()
+    cep = models.CharField(max_length=20)
     numero = models.IntegerField()
     logradouro = models.CharField(max_length=100)
