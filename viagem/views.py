@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Viagem
 from .forms import ViagemForm
 
 
+@login_required
 def viagem_list(request):
     objetos = Viagem.objects.all()
 
@@ -14,6 +15,7 @@ def viagem_list(request):
     })
 
 
+@login_required
 def viagem_create(request):
     if request.method == 'POST':
         form = ViagemForm(request.POST)
@@ -29,6 +31,8 @@ def viagem_create(request):
         'form': form
     })
 
+
+@login_required
 def viagem_detail(request, pk):
     objeto = Viagem.objects.get(pk=pk)
 
@@ -36,6 +40,8 @@ def viagem_detail(request, pk):
         'objeto': objeto
     })
 
+
+@login_required
 def viagem_update(request, pk):
     objeto = Viagem.objects.get(pk=pk)
 
@@ -53,6 +59,8 @@ def viagem_update(request, pk):
         'form': form
     })
 
+
+@login_required
 def viagem_delete(request, pk):
     objeto = Viagem.objects.get(pk=pk)
 
@@ -63,3 +71,4 @@ def viagem_delete(request, pk):
     return render(request, 'viagem/viagem_confirm_delete.html', {
         'objeto': objeto
     })
+

@@ -1,67 +1,56 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Veiculo
 from .forms import VeiculoForm
 
-
+@login_required
 def veiculo_list(request):
-    objetos = Veiculo.objects.all()
+objetos = Veiculo.objects.all()
+return render(request, 'veiculo/veiculo_list.html', {'objetos': objetos})
 
-    return render(request, 'veiculo/veiculo_list.html', {
-        'objetos': objetos
-    })
-
-
+@login_required
 def veiculo_create(request):
-    if request.method == 'POST':
-        form = VeiculoForm(request.POST)
+if request.method == 'POST':
+form = VeiculoForm(request.POST)
+if form.is_valid():
+form.save()
+return redirect('veiculo_list')
+else:
+form = VeiculoForm()
 
-        if form.is_valid():
-            form.save()
-            return redirect('veiculo_list')
+return render(request, 'veiculo/veiculo_form.html', {
+    'form': form
+})
 
-    else:
-        form = VeiculoForm()
-
-    return render(request, 'veiculo/veiculo_form.html', {
-        'form': form
-    })
-
-
+@login_required
 def veiculo_detail(request, pk):
-    objeto = get_object_or_404(Veiculo, pk=pk)
+objeto = get_object_or_404(Veiculo, pk=pk)
+return render(request, 'veiculo/veiculo_detail.html', {'objeto': objeto})
 
-    return render(request, 'veiculo/veiculo_detail.html', {
-        'objeto': objeto
-    })
-
-
+@login_required
 def veiculo_update(request, pk):
-    objeto = get_object_or_404(Veiculo, pk=pk)
+objeto = get_object_or_404(Veiculo, pk=pk)
+if request.method == 'POST':
+form = VeiculoForm(request.POST, instance=objeto)
+if form.is_valid():
+form.save()
+return redirect('veiculo_detail', pk=objeto.pk)
+else:
+form = VeiculoForm(instance=objeto)
 
-    if request.method == 'POST':
-        form = VeiculoForm(request.POST, instance=objeto)
+return render(request, 'veiculo/veiculo_update.html', {
+    'form': form,
+    'objeto': objeto
+})
 
-        if form.is_valid():
-            form.save()
-            return redirect('veiculo_detail', pk=objeto.pk)
-
-    else:
-        form = VeiculoForm(instance=objeto)
-
-    return render(request, 'veiculo/veiculo_update.html', {
-        'form': form,
-        'objeto': objeto
-    })
-
-
+@login_required
 def veiculo_delete(request, pk):
-    objeto = get_object_or_404(Veiculo, pk=pk)
+objeto = get_object_or_404(Veiculo, pk=pk)
+if request.method == 'POST':
+objeto.delete()
+return redirect('veiculo_list')
 
-    if request.method == 'POST':
-        objeto.delete()
-        return redirect('veiculo_list')
-
-    return render(request, 'veiculo/veiculo_delete.html', {
-        'objeto': objeto
-    })
+return render(request, 'veiculo/veiculo_delete.html', {
+    'objeto': objeto
+})
