@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Despesa
 from .forms import DespesaForm
 
 
+@login_required
 def despesa_list(request):
     objetos = Despesa.objects.all()
 
@@ -12,6 +14,7 @@ def despesa_list(request):
     })
 
 
+@login_required
 def despesa_create(request):
     if request.method == 'POST':
         form = DespesaForm(request.POST)
@@ -19,7 +22,6 @@ def despesa_create(request):
         if form.is_valid():
             form.save()
             return redirect('despesa_list')
-
     else:
         form = DespesaForm()
 
@@ -28,6 +30,7 @@ def despesa_create(request):
     })
 
 
+@login_required
 def despesa_detail(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 
@@ -36,6 +39,7 @@ def despesa_detail(request, pk):
     })
 
 
+@login_required
 def despesa_update(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 
@@ -45,7 +49,6 @@ def despesa_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect('despesa_detail', pk=objeto.pk)
-
     else:
         form = DespesaForm(instance=objeto)
 
@@ -55,6 +58,7 @@ def despesa_update(request, pk):
     })
 
 
+@login_required
 def despesa_delete(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 

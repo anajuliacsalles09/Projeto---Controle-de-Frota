@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Manutencao
 from .forms import ManutencaoForm
 
 
+@login_required
 def manutencao_list(request):
     objetos = Manutencao.objects.all()
 
@@ -14,6 +16,7 @@ def manutencao_list(request):
     )
 
 
+@login_required
 def manutencao_create(request):
     if request.method == 'POST':
         form = ManutencaoForm(request.POST)
@@ -21,7 +24,6 @@ def manutencao_create(request):
         if form.is_valid():
             form.save()
             return redirect('manutencao_list')
-
     else:
         form = ManutencaoForm()
 
@@ -32,6 +34,7 @@ def manutencao_create(request):
     )
 
 
+@login_required
 def manutencao_detail(request, pk):
     objeto = get_object_or_404(Manutencao, pk=pk)
 
@@ -42,6 +45,7 @@ def manutencao_detail(request, pk):
     )
 
 
+@login_required
 def manutencao_update(request, pk):
     objeto = get_object_or_404(Manutencao, pk=pk)
 
@@ -51,7 +55,6 @@ def manutencao_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect('manutencao_detail', pk=objeto.pk)
-
     else:
         form = ManutencaoForm(instance=objeto)
 
@@ -65,6 +68,7 @@ def manutencao_update(request, pk):
     )
 
 
+@login_required
 def manutencao_delete(request, pk):
     objeto = get_object_or_404(Manutencao, pk=pk)
 
