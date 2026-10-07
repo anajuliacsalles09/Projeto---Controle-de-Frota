@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Veiculo
 from .forms import VeiculoForm
 
 
 @login_required
+@permission_required('veiculo.view_veiculo', raise_exception=True)
 def veiculo_list(request):
     objetos = Veiculo.objects.all()
 
@@ -17,6 +18,7 @@ def veiculo_list(request):
 
 
 @login_required
+@permission_required('veiculo.add_veiculo', raise_exception=True)
 def veiculo_create(request):
     if request.method == 'POST':
         form = VeiculoForm(request.POST)
@@ -36,6 +38,7 @@ def veiculo_create(request):
 
 
 @login_required
+@permission_required('veiculo.view_veiculo', raise_exception=True)
 def veiculo_detail(request, pk):
     objeto = get_object_or_404(Veiculo, pk=pk)
 
@@ -47,6 +50,7 @@ def veiculo_detail(request, pk):
 
 
 @login_required
+@permission_required('veiculo.change_veiculo', raise_exception=True)
 def veiculo_update(request, pk):
     objeto = get_object_or_404(Veiculo, pk=pk)
 
@@ -71,6 +75,7 @@ def veiculo_update(request, pk):
 
 
 @login_required
+@permission_required('veiculo.delete_veiculo', raise_exception=True)
 def veiculo_delete(request, pk):
     objeto = get_object_or_404(Veiculo, pk=pk)
 

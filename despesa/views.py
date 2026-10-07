@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Despesa
 from .forms import DespesaForm
 
 
 @login_required
+@permission_required('despesa.view_despesa', raise_exception=True)
 def despesa_list(request):
     objetos = Despesa.objects.all()
 
@@ -15,6 +16,7 @@ def despesa_list(request):
 
 
 @login_required
+@permission_required('despesa.add_despesa', raise_exception=True)
 def despesa_create(request):
     if request.method == 'POST':
         form = DespesaForm(request.POST)
@@ -31,6 +33,7 @@ def despesa_create(request):
 
 
 @login_required
+@permission_required('despesa.view_despesa', raise_exception=True)
 def despesa_detail(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 
@@ -40,6 +43,7 @@ def despesa_detail(request, pk):
 
 
 @login_required
+@permission_required('despesa.change_despesa', raise_exception=True)
 def despesa_update(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 
@@ -59,6 +63,7 @@ def despesa_update(request, pk):
 
 
 @login_required
+@permission_required('despesa.delete_despesa', raise_exception=True)
 def despesa_delete(request, pk):
     objeto = get_object_or_404(Despesa, pk=pk)
 

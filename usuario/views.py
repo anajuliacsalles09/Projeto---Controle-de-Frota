@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Usuario
 from .forms import UsuarioForm
 
 
 @login_required
+@permission_required('usuario.view_usuario', raise_exception=True)
 def usuario_list(request):
     objetos = Usuario.objects.all()
 
@@ -16,6 +17,8 @@ def usuario_list(request):
     )
 
 
+@login_required
+@permission_required('usuario.add_usuario', raise_exception=True)
 def usuario_create(request):
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
@@ -35,6 +38,7 @@ def usuario_create(request):
 
 
 @login_required
+@permission_required('usuario.view_usuario', raise_exception=True)
 def usuario_detail(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 
@@ -46,6 +50,7 @@ def usuario_detail(request, pk):
 
 
 @login_required
+@permission_required('usuario.change_usuario', raise_exception=True)
 def usuario_update(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 
@@ -70,6 +75,7 @@ def usuario_update(request, pk):
 
 
 @login_required
+@permission_required('usuario.delete_usuario', raise_exception=True)
 def usuario_delete(request, pk):
     objeto = Usuario.objects.get(pk=pk)
 

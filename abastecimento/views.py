@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Abastecimento
 from .forms import AbastecimentoForm
 
 
 @login_required
+@permission_required('abastecimento.view_abastecimento', raise_exception=True)
 def abastecimento_list(request):
     objetos = Abastecimento.objects.all()
 
@@ -15,6 +16,7 @@ def abastecimento_list(request):
 
 
 @login_required
+@permission_required('abastecimento.add_abastecimento', raise_exception=True)
 def abastecimento_create(request):
     if request.method == 'POST':
         form = AbastecimentoForm(request.POST)
@@ -32,6 +34,7 @@ def abastecimento_create(request):
 
 
 @login_required
+@permission_required('abastecimento.view_abastecimento', raise_exception=True)
 def abastecimento_detail(request, pk):
     objeto = get_object_or_404(Abastecimento, pk=pk)
 
@@ -41,6 +44,7 @@ def abastecimento_detail(request, pk):
 
 
 @login_required
+@permission_required('abastecimento.change_abastecimento', raise_exception=True)
 def abastecimento_update(request, pk):
     objeto = get_object_or_404(Abastecimento, pk=pk)
 
@@ -61,6 +65,7 @@ def abastecimento_update(request, pk):
 
 
 @login_required
+@permission_required('abastecimento.delete_abastecimento', raise_exception=True)
 def abastecimento_delete(request, pk):
     objeto = get_object_or_404(Abastecimento, pk=pk)
 

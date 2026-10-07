@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .models import Carga
 from .forms import CargaForm
 
 
 @login_required
+@permission_required('carga.view_carga', raise_exception=True)
 def carga_list(request):
     objetos = Carga.objects.all()
 
@@ -15,6 +16,7 @@ def carga_list(request):
 
 
 @login_required
+@permission_required('carga.add_carga', raise_exception=True)
 def carga_create(request):
     if request.method == 'POST':
         form = CargaForm(request.POST)
@@ -31,6 +33,7 @@ def carga_create(request):
 
 
 @login_required
+@permission_required('carga.view_carga', raise_exception=True)
 def carga_detail(request, pk):
     objeto = get_object_or_404(Carga, pk=pk)
 
@@ -40,6 +43,7 @@ def carga_detail(request, pk):
 
 
 @login_required
+@permission_required('carga.change_carga', raise_exception=True)
 def carga_update(request, pk):
     objeto = get_object_or_404(Carga, pk=pk)
 
@@ -59,6 +63,7 @@ def carga_update(request, pk):
 
 
 @login_required
+@permission_required('carga.delete_carga', raise_exception=True)
 def carga_delete(request, pk):
     objeto = get_object_or_404(Carga, pk=pk)
 
