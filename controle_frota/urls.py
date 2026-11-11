@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
+    path('', views.dashboard, name='dashboard'),
+
     path('admin/', admin.site.urls),
+
     path('veiculos/', include('veiculo.urls')),
     path('usuarios/', include('usuario.urls')),
     path('despesas/', include('despesa.urls')),

@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Controle de Frota{% endblock %}
+
+{% block content %}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Painel de Controle <small>Visão geral da frota</small></h3>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<!-- CARDS DE INFORMAÇÕES -->
+<div class="row">
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <h2>{{ total_veiculos }}</h2>
+                <span class="name">Veículos cadastrados</span>
+                <i class="fa fa-truck fa-2x text-primary"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <h2>{{ total_viagens }}</h2>
+                <span class="name">Viagens registradas</span>
+                <i class="fa fa-road fa-2x text-success"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <h2>{{ total_abastecimentos }}</h2>
+                <span class="name">Abastecimentos</span>
+                <i class="fa fa-tint fa-2x text-info"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <h2>{{ total_manutencoes }}</h2>
+                <span class="name">Manutenções</span>
+                <i class="fa fa-wrench fa-2x text-warning"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- INFORMAÇÕES COMPLEMENTARES -->
+<div class="row">
+
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Resumo do sistema</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <p><strong>Usuários cadastrados:</strong> {{ total_usuarios }}</p>
+                <p><strong>Cargas registradas:</strong> {{ total_cargas }}</p>
+                <p><strong>Despesas registradas:</strong> {{ total_despesas }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Acesso rápido</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+                <a href="{% url 'veiculo_create' %}" class="btn btn-primary">
+                    <i class="fa fa-truck"></i> Cadastrar veículo
+                </a>
+
+                <a href="{% url 'viagem_create' %}" class="btn btn-success">
+                    <i class="fa fa-road"></i> Registrar viagem
+                </a>
+
+                <a href="{% url 'despesa_create' %}" class="btn btn-warning">
+                    <i class="fa fa-money"></i> Registrar despesa
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

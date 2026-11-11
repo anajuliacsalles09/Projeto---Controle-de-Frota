@@ -1,0 +1,183 @@
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Controle de Frota{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'gentelella/vendors/bootstrap/dist/css/bootstrap.min.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'gentelella/vendors/font-awesome/css/font-awesome.min.css' %}">
+
+    <!-- NProgress -->
+    <link rel="stylesheet" href="{% static 'gentelella/vendors/nprogress/nprogress.css' %}">
+
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{% static 'gentelella/vendors/iCheck/skins/flat/green.css' %}">
+
+    <!-- Gentelella -->
+    <link rel="stylesheet" href="{% static 'gentelella/build/css/custom.min.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="nav-md">
+
+<div class="container body">
+    <div class="main_container">
+
+        <!-- MENU LATERAL -->
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+
+                <div class="navbar nav_title">
+                    <a href="{% url 'dashboard' %}" class="site_title">
+                        <i class="fa fa-truck"></i>
+                        <span>Controle de Frota</span>
+                    </a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3>Menu Principal</h3>
+
+                        <ul class="nav side-menu">
+
+                            <li>
+                                <a href="{% url 'dashboard' %}">
+                                    <i class="fa fa-home"></i> Dashboard
+                                </a>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-truck"></i> Veículos
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'veiculo_list' %}">Listar veículos</a></li>
+                                    <li><a href="{% url 'veiculo_create' %}">Cadastrar veículo</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-users"></i> Usuários
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'usuario_list' %}">Listar usuários</a></li>
+                                    <li><a href="{% url 'usuario_create' %}">Cadastrar usuário</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-road"></i> Viagens
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'viagem_list' %}">Listar viagens</a></li>
+                                    <li><a href="{% url 'viagem_create' %}">Cadastrar viagem</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-tint"></i> Abastecimentos
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'abastecimento_list' %}">Listar abastecimentos</a></li>
+                                    <li><a href="{% url 'abastecimento_create' %}">Cadastrar abastecimento</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-wrench"></i> Manutenções
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'manutencao_list' %}">Listar manutenções</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-cubes"></i> Cargas
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'carga_list' %}">Listar cargas</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a><i class="fa fa-money"></i> Despesas
+                                    <span class="fa fa-chevron-down"></span>
+                                </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{% url 'despesa_list' %}">Listar despesas</a></li>
+                                    <li><a href="{% url 'despesa_create' %}">Cadastrar despesa</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TOPO -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <div class="nav toggle">
+                    <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+
+                <nav class="nav navbar-nav">
+                    <ul class="navbar-right">
+                        <li>
+                            <a href="{% url 'logout' %}">
+                                <i class="fa fa-sign-out"></i> Sair
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO -->
+        <div class="right_col" role="main">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <!-- RODAPÉ -->
+        <footer>
+            <div class="pull-right">
+                Controle de Frota - Sistema de Gerenciamento
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="{% static 'gentelella/vendors/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'gentelella/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'gentelella/vendors/fastclick/lib/fastclick.js' %}"></script>
+<script src="{% static 'gentelella/vendors/nprogress/nprogress.js' %}"></script>
+<script src="{% static 'gentelella/vendors/iCheck/icheck.min.js' %}"></script>
+<script src="{% static 'gentelella/build/js/custom.min.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>
