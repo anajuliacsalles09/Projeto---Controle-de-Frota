@@ -1,30 +1,126 @@
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>Viagem</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-```
-<h1>Viagem</h1>
+{% block content %}
 
-<form method="post">
-    {% csrf_token %}
+<div class="">
 
-    {{ form.as_p }}
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                {% if objeto %}
+                    Editar viagem
+                {% else %}
+                    Cadastrar viagem
+                {% endif %}
+            </h3>
+        </div>
+    </div>
 
-    <button type="submit">
-        Salvar
-    </button>
-</form>
+    <div class="clearfix"></div>
 
-<br>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
 
-<a href="{% url 'viagem_list' %}">
-    Voltar para a lista
-</a>
-```
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Dados da viagem</h2>
+                    <div class="clearfix"></div>
+                </div>
 
-</body>
-</html>
+                <div class="x_content">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                {% for campo in form %}
+                                    {% if campo.name == 'usuario' or campo.name == 'veiculo' or campo.name == 'origem' or campo.name == 'data_saida' or campo.name == 'data_retorno' %}
+
+                                        <div class="form-group">
+                                            <label>{{ campo.label }}</label>
+                                            {{ campo }}
+
+                                            {% if campo.errors %}
+                                                <div class="text-danger">
+                                                    {{ campo.errors }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                {% for campo in form %}
+                                    {% if campo.name == 'destino' or campo.name == 'distancia' or campo.name == 'valor_frete' or campo.name == 'valor_resultado' or campo.name == 'status' %}
+
+                                        <div class="form-group">
+                                            <label>{{ campo.label }}</label>
+                                            {{ campo }}
+
+                                            {% if campo.errors %}
+                                                <div class="text-danger">
+                                                    {{ campo.errors }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="ln_solid"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">
+                                {% if objeto %}
+                                    Salvar alterações
+                                {% else %}
+                                    Cadastrar viagem
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'viagem_list' %}" class="btn btn-primary">
+                                Voltar
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+c

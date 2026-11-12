@@ -1,22 +1,137 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Usuário</title>
-</head>
-<body>
 
-    <h1>Cadastrar Usuário</h1>
+{% extends 'base.html' %}
 
-    <form method="post">
-        {% csrf_token %}
+{% block content %}
 
-        {{ form.as_p }}
+<div class="">
 
-        <button type="submit">Cadastrar</button>
-    </form>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>
+                {% if objeto %}
+                    Editar usuário
+                {% else %}
+                    Cadastrar usuário
+                {% endif %}
+            </h3>
+        </div>
+    </div>
 
-    <a href="{% url 'usuario_list' %}">Voltar para a lista</a>
+    <div class="clearfix"></div>
 
-</body>
-</html>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Dados do usuário</h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade in" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                {% for campo in form %}
+                                    {% if campo.name == 'username' or campo.name == 'nome' or campo.name == 'email' or campo.name == 'cpf' or campo.name == 'telefone' or campo.name == 'password1' %}
+
+                                        <div class="form-group">
+                                            <label>{{ campo.label }}</label>
+                                            {{ campo }}
+
+                                            {% if campo.errors %}
+                                                <div class="text-danger">
+                                                    {{ campo.errors }}
+                                                </div>
+                                            {% endif %}
+
+                                            {% if campo.help_text %}
+                                                <small class="text-muted">
+                                                    {{ campo.help_text }}
+                                                </small>
+                                            {% endif %}
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                {% for campo in form %}
+                                    {% if campo.name == 'rua' or campo.name == 'bairro' or campo.name == 'cep' or campo.name == 'numero' or campo.name == 'logradouro' or campo.name == 'password2' %}
+
+                                        <div class="form-group">
+                                            <label>{{ campo.label }}</label>
+                                            {{ campo }}
+
+                                            {% if campo.errors %}
+                                                <div class="text-danger">
+                                                    {{ campo.errors }}
+                                                </div>
+                                            {% endif %}
+
+                                            {% if campo.help_text %}
+                                                <small class="text-muted">
+                                                    {{ campo.help_text }}
+                                                </small>
+                                            {% endif %}
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                        <div class="ln_solid"></div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">
+                                {% if objeto %}
+                                    Salvar alterações
+                                {% else %}
+                                    Cadastrar usuário
+                                {% endif %}
+                            </button>
+
+                            <a href="{% url 'usuario_list' %}" class="btn btn-primary">
+                                Voltar
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

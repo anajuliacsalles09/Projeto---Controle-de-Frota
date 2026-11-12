@@ -1,3 +1,4 @@
+
 from django.db import models
 
 
@@ -21,3 +22,6 @@ class Viagem(models.Model):
     valor_frete = models.FloatField()
     valor_resultado = models.FloatField()
     status = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.origem} - {self.destino}'

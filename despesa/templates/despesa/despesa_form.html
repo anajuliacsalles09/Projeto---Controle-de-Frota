@@ -1,30 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Despesa</title>
-</head>
-<body>
 
-    <h1>Cadastrar Despesa</h1>
+{% extends 'base.html' %}
 
-    <form method="POST">
+{% block content %}
 
-        {% csrf_token %}
+<div class="page-title">
+    <div class="title_left">
+        <h3>Cadastrar Despesa</h3>
+    </div>
+</div>
 
-        {{ form.as_p }}
+<div class="clearfix"></div>
 
-        <button type="submit">
-            Salvar
-        </button>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
 
-    </form>
+            <div class="x_title">
+                <h2>Dados da despesa</h2>
+                <div class="clearfix"></div>
+            </div>
 
-    <br>
+            <div class="x_content">
 
-    <a href="{% url 'despesa_list' %}">
-        Voltar para a lista
-    </a>
+                <form method="POST" class="form-horizontal form-label-left">
+                    {% csrf_token %}
 
-</body>
-</html>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {{ form.as_p }}
+
+                    <div class="ln_solid"></div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> Salvar despesa
+                        </button>
+
+                        <a href="{% url 'despesa_list' %}" class="btn btn-primary">
+                            <i class="fa fa-arrow-left"></i> Voltar
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,13 @@
-from django import forms
 
+from django import forms
 from .models import Viagem
 
 
 class ViagemForm(forms.ModelForm):
+
     class Meta:
         model = Viagem
+
         fields = [
             'usuario',
             'veiculo',
@@ -18,3 +20,16 @@ class ViagemForm(forms.ModelForm):
             'valor_resultado',
             'status',
         ]
+
+        widgets = {
+            'usuario': forms.Select(attrs={'class': 'form-control'}),
+            'veiculo': forms.Select(attrs={'class': 'form-control'}),
+            'origem': forms.TextInput(attrs={'class': 'form-control'}),
+            'data_saida': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'data_retorno': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'destino': forms.TextInput(attrs={'class': 'form-control'}),
+            'distancia': forms.NumberInput(attrs={'class': 'form-control'}),
+            'valor_frete': forms.NumberInput(attrs={'class': 'form-control'}),
+            'valor_resultado': forms.NumberInput(attrs={'class': 'form-control'}),
+            'status': forms.TextInput(attrs={'class': 'form-control'}),
+        }
