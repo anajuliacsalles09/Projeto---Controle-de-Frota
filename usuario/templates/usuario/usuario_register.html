@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar conta | Controle de Frota{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>
+                    <i class="fa fa-user-plus"></i>
+                    Criar uma conta
+                </h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <p>Preencha os dados abaixo para criar sua conta.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            Verifique os campos indicados e tente novamente.
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+
+                        {% for field in form %}
+
+                            <div class="col-md-6 col-sm-12 form-group">
+
+                                <label for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.help_text %}
+                                    <small class="text-muted">
+                                        {{ field.help_text|safe }}
+                                    </small>
+                                {% endif %}
+
+                                {% for error in field.errors %}
+                                    <span class="text-danger">
+                                        {{ error }}
+                                    </span>
+                                {% endfor %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-check"></i>
+                        Criar conta
+                    </button>
+
+                    <a href="{% url 'login' %}" class="btn btn-default">
+                        Voltar para o login
+                    </a>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

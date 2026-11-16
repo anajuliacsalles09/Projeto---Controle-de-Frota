@@ -5,60 +5,62 @@
 
 {% block content %}
 
+<!-- TÍTULO DO DASHBOARD -->
 <div class="page-title">
     <div class="title_left">
-        <h3>Painel de Controle <small>Visão geral da frota</small></h3>
+        <h3>Painel de Controle</h3>
+        <p>Bem-vindo ao sistema de gerenciamento da frota.</p>
     </div>
 </div>
 
 <div class="clearfix"></div>
 
-<!-- CARDS DE INFORMAÇÕES -->
+<!-- INDICADORES PRINCIPAIS -->
 <div class="row">
 
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel dashboard-card">
             <div class="x_content">
+                <span class="card-label">Veículos cadastrados</span>
                 <h2>{{ total_veiculos }}</h2>
-                <span class="name">Veículos cadastrados</span>
-                <i class="fa fa-truck fa-2x text-primary"></i>
+                <i class="fa fa-truck card-icon"></i>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel dashboard-card">
             <div class="x_content">
+                <span class="card-label">Viagens registradas</span>
                 <h2>{{ total_viagens }}</h2>
-                <span class="name">Viagens registradas</span>
-                <i class="fa fa-road fa-2x text-success"></i>
+                <i class="fa fa-road card-icon"></i>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel dashboard-card">
             <div class="x_content">
+                <span class="card-label">Abastecimentos</span>
                 <h2>{{ total_abastecimentos }}</h2>
-                <span class="name">Abastecimentos</span>
-                <i class="fa fa-tint fa-2x text-info"></i>
+                <i class="fa fa-tint card-icon"></i>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel">
+        <div class="x_panel dashboard-card">
             <div class="x_content">
+                <span class="card-label">Manutenções</span>
                 <h2>{{ total_manutencoes }}</h2>
-                <span class="name">Manutenções</span>
-                <i class="fa fa-wrench fa-2x text-warning"></i>
+                <i class="fa fa-wrench card-icon"></i>
             </div>
         </div>
     </div>
 
 </div>
 
-<!-- INFORMAÇÕES COMPLEMENTARES -->
+<!-- RESUMO E ACESSO RÁPIDO -->
 <div class="row">
 
     <div class="col-md-6 col-sm-12">
@@ -69,9 +71,25 @@
             </div>
 
             <div class="x_content">
-                <p><strong>Usuários cadastrados:</strong> {{ total_usuarios }}</p>
-                <p><strong>Cargas registradas:</strong> {{ total_cargas }}</p>
-                <p><strong>Despesas registradas:</strong> {{ total_despesas }}</p>
+
+                <p>
+                    <i class="fa fa-users"></i>
+                    <strong>Usuários cadastrados:</strong>
+                    {{ total_usuarios }}
+                </p>
+
+                <p>
+                    <i class="fa fa-cubes"></i>
+                    <strong>Cargas registradas:</strong>
+                    {{ total_cargas }}
+                </p>
+
+                <p>
+                    <i class="fa fa-money"></i>
+                    <strong>Despesas registradas:</strong>
+                    {{ total_despesas }}
+                </p>
+
             </div>
         </div>
     </div>
@@ -84,17 +102,24 @@
             </div>
 
             <div class="x_content">
+
+                <p>Selecione uma ação para acessar rapidamente o sistema.</p>
+
                 <a href="{% url 'veiculo_create' %}" class="btn btn-primary">
-                    <i class="fa fa-truck"></i> Cadastrar veículo
+                    <i class="fa fa-plus"></i>
+                    Novo veículo
                 </a>
 
                 <a href="{% url 'viagem_create' %}" class="btn btn-success">
-                    <i class="fa fa-road"></i> Registrar viagem
+                    <i class="fa fa-road"></i>
+                    Nova viagem
                 </a>
 
                 <a href="{% url 'despesa_create' %}" class="btn btn-warning">
-                    <i class="fa fa-money"></i> Registrar despesa
+                    <i class="fa fa-money"></i>
+                    Nova despesa
                 </a>
+
             </div>
         </div>
     </div>
@@ -102,3 +127,5 @@
 </div>
 
 {% endblock %}
+
+

@@ -1,5 +1,7 @@
 
+
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from veiculo.models import Veiculo
 from viagem.models import Viagem
@@ -10,6 +12,7 @@ from carga.models import Carga
 from despesa.models import Despesa
 
 
+@login_required
 def dashboard(request):
     context = {
         'total_veiculos': Veiculo.objects.count(),
