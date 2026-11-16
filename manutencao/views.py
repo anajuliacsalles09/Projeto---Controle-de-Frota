@@ -1,5 +1,7 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 
 from .models import Manutencao
 from .forms import ManutencaoForm
@@ -10,10 +12,17 @@ from .forms import ManutencaoForm
 def manutencao_list(request):
     objetos = Manutencao.objects.all()
 
+    quantidade_manutencoes = objetos.count()
+    valor_total = sum(manutencao.valor for manutencao in objetos)
+
     return render(
         request,
         'manutencao/manutencao_list.html',
-        {'objetos': objetos}
+        {
+            'objetos': objetos,
+            'quantidade_manutencoes': quantidade_manutencoes,
+            'valor_total': valor_total
+        }
     )
 
 
@@ -25,7 +34,10 @@ def manutencao_create(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Manutenção cadastrada com sucesso!')
             return redirect('manutencao_list')
+        else:
+            messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
     else:
         form = ManutencaoForm()
 
@@ -58,7 +70,10 @@ def manutencao_update(request, pk):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Manutenção atualizada com sucesso!')
             return redirect('manutencao_detail', pk=objeto.pk)
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
     else:
         form = ManutencaoForm(instance=objeto)
 
@@ -79,6 +94,7 @@ def manutencao_delete(request, pk):
 
     if request.method == 'POST':
         objeto.delete()
+        messages.success(request, 'Manutenção excluída com sucesso!')
         return redirect('manutencao_list')
 
     return render(

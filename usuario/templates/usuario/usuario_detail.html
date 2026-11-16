@@ -1,69 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes do Usuário</title>
-</head>
-<body>
 
-    <h1>Detalhes do Usuário</h1>
+{% extends 'base.html' %}
 
-    <p>
-        <strong>Nome:</strong>
-        {{ objeto.nome }}
-    </p>
+{% block title %}Detalhes do Usuário | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>CPF:</strong>
-        {{ objeto.cpf }}
-    </p>
+{% block content %}
 
-    <p>
-        <strong>Telefone:</strong>
-        {{ objeto.telefone }}
-    </p>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Detalhes do Usuário</h3>
+    </div>
+</div>
 
-    <p>
-        <strong>Rua:</strong>
-        {{ objeto.rua }}
-    </p>
+<div class="clearfix"></div>
 
-    <p>
-        <strong>Bairro:</strong>
-        {{ objeto.bairro }}
-    </p>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-    <p>
-        <strong>CEP:</strong>
-        {{ objeto.cep }}
-    </p>
+        <div class="x_panel">
 
-    <p>
-        <strong>Número:</strong>
-        {{ objeto.numero }}
-    </p>
+            <div class="x_title">
+                <h2>Informações do usuário</h2>
+                <div class="clearfix"></div>
+            </div>
 
-    <p>
-        <strong>Logradouro:</strong>
-        {{ objeto.logradouro }}
-    </p>
+            <div class="x_content">
 
-    <hr>
+                <div class="row">
 
-    <a href="{% url 'usuario_update' objeto.pk %}">
-        Editar
-    </a>
+                    <div class="col-md-6">
+                        <p><strong>Nome:</strong> {{ objeto.nome }}</p>
+                        <p><strong>CPF:</strong> {{ objeto.cpf }}</p>
+                        <p><strong>Telefone:</strong> {{ objeto.telefone }}</p>
+                        <p><strong>Rua:</strong> {{ objeto.rua }}</p>
+                        <p><strong>Bairro:</strong> {{ objeto.bairro }}</p>
+                    </div>
 
-    |
+                    <div class="col-md-6">
+                        <p><strong>CEP:</strong> {{ objeto.cep }}</p>
+                        <p><strong>Número:</strong> {{ objeto.numero }}</p>
+                        <p><strong>Logradouro:</strong> {{ objeto.logradouro }}</p>
+                    </div>
 
-    <a href="{% url 'usuario_delete' objeto.pk %}">
-        Excluir
-    </a>
+                </div>
 
-    |
+                <div class="ln_solid"></div>
 
-    <a href="{% url 'usuario_list' %}">
-        Voltar para a lista
-    </a>
+                <a href="{% url 'usuario_update' objeto.pk %}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i> Editar
+                </a>
 
-</body>
-</html>
+                <a href="{% url 'usuario_delete' objeto.pk %}" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Excluir
+                </a>
+
+                <a href="{% url 'usuario_list' %}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

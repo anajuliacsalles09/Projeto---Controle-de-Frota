@@ -1,59 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes da Carga</title>
-</head>
-<body>
 
-    <h1>Detalhes da Carga</h1>
+{% extends 'base.html' %}
 
-    <p>
-        <strong>ID:</strong>
-        {{ objeto.id }}
-    </p>
+{% block title %}Detalhes da Carga | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>Viagem:</strong>
-        {{ objeto.viagem }}
-    </p>
+{% block content %}
 
-    <p>
-        <strong>Descrição:</strong>
-        {{ objeto.descricao }}
-    </p>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Detalhes da Carga</h3>
+    </div>
+</div>
 
-    <p>
-        <strong>Peso:</strong>
-        {{ objeto.peso }}
-    </p>
+<div class="clearfix"></div>
 
-    <p>
-        <strong>Valor:</strong>
-        {{ objeto.valor }}
-    </p>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-    <p>
-        <strong>Observação:</strong>
-        {{ objeto.observacao }}
-    </p>
+        <div class="x_panel">
 
-    <br>
+            <div class="x_title">
+                <h2>Informações da carga</h2>
+                <div class="clearfix"></div>
+            </div>
 
-    <a href="{% url 'carga_update' objeto.pk %}">
-        Editar
-    </a>
+            <div class="x_content">
 
-    |
+                <div class="row">
 
-    <a href="{% url 'carga_delete' objeto.pk %}">
-        Excluir
-    </a>
+                    <div class="col-md-6">
+                        <p><strong>ID:</strong> {{ objeto.id }}</p>
+                        <p><strong>Viagem:</strong> {{ objeto.viagem }}</p>
+                        <p><strong>Descrição:</strong> {{ objeto.descricao }}</p>
+                    </div>
 
-    |
+                    <div class="col-md-6">
+                        <p><strong>Peso:</strong> {{ objeto.peso }}</p>
+                        <p><strong>Valor:</strong> R$ {{ objeto.valor }}</p>
+                        <p><strong>Observação:</strong> {{ objeto.observacao }}</p>
+                    </div>
 
-    <a href="{% url 'carga_list' %}">
-        Voltar para a lista
-    </a>
+                </div>
 
-</body>
-</html>
+                <div class="ln_solid"></div>
+
+                <a href="{% url 'carga_update' objeto.pk %}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i> Editar
+                </a>
+
+                <a href="{% url 'carga_delete' objeto.pk %}" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Excluir
+                </a>
+
+                <a href="{% url 'carga_list' %}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

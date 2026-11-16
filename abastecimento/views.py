@@ -1,5 +1,8 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
+from django.db.models import Sum
 
 from .models import Abastecimento
 from .forms import AbastecimentoForm
@@ -10,8 +13,21 @@ from .forms import AbastecimentoForm
 def abastecimento_list(request):
     objetos = Abastecimento.objects.all()
 
+    quantidade_abastecimentos = objetos.count()
+
+    total_litros = Abastecimento.objects.aggregate(
+        total=Sum('litros')
+    )['total'] or 0
+
+    valor_total = Abastecimento.objects.aggregate(
+        total=Sum('valor')
+    )['total'] or 0
+
     return render(request, 'abastecimento/abastecimento_list.html', {
-        'objetos': objetos
+        'objetos': objetos,
+        'quantidade_abastecimentos': quantidade_abastecimentos,
+        'total_litros': total_litros,
+        'valor_total': valor_total
     })
 
 
@@ -23,8 +39,10 @@ def abastecimento_create(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Abastecimento cadastrado com sucesso!')
             return redirect('abastecimento_list')
-
+        else:
+            messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
     else:
         form = AbastecimentoForm()
 
@@ -53,8 +71,10 @@ def abastecimento_update(request, pk):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Abastecimento atualizado com sucesso!')
             return redirect('abastecimento_detail', pk=objeto.pk)
-
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
     else:
         form = AbastecimentoForm(instance=objeto)
 
@@ -71,6 +91,7 @@ def abastecimento_delete(request, pk):
 
     if request.method == 'POST':
         objeto.delete()
+        messages.success(request, 'Abastecimento excluído com sucesso!')
         return redirect('abastecimento_list')
 
     return render(request, 'abastecimento/abastecimento_delete.html', {

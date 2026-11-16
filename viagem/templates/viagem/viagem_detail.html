@@ -1,52 +1,67 @@
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>Detalhes da Viagem</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-```
-<h1>Detalhes da Viagem</h1>
+{% block title %}Detalhes da Viagem | Controle de Frota{% endblock %}
 
-<p><strong>Usuário:</strong> {{ objeto.usuario }}</p>
+{% block content %}
 
-<p><strong>Veículo:</strong> {{ objeto.veiculo }}</p>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Detalhes da Viagem</h3>
+    </div>
+</div>
 
-<p><strong>Origem:</strong> {{ objeto.origem }}</p>
+<div class="clearfix"></div>
 
-<p><strong>Data de saída:</strong> {{ objeto.data_saida }}</p>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-<p><strong>Data de retorno:</strong> {{ objeto.data_retorno }}</p>
+        <div class="x_panel">
 
-<p><strong>Destino:</strong> {{ objeto.destino }}</p>
+            <div class="x_title">
+                <h2>Informações da viagem</h2>
+                <div class="clearfix"></div>
+            </div>
 
-<p><strong>Distância:</strong> {{ objeto.distancia }}</p>
+            <div class="x_content">
 
-<p><strong>Valor do frete:</strong> {{ objeto.valor_frete }}</p>
+                <div class="row">
 
-<p><strong>Valor do resultado:</strong> {{ objeto.valor_resultado }}</p>
+                    <div class="col-md-6">
+                        <p><strong>Usuário:</strong> {{ objeto.usuario }}</p>
+                        <p><strong>Veículo:</strong> {{ objeto.veiculo }}</p>
+                        <p><strong>Origem:</strong> {{ objeto.origem }}</p>
+                        <p><strong>Destino:</strong> {{ objeto.destino }}</p>
+                        <p><strong>Data de saída:</strong> {{ objeto.data_saida }}</p>
+                    </div>
 
-<p><strong>Status:</strong> {{ objeto.status }}</p>
+                    <div class="col-md-6">
+                        <p><strong>Data de retorno:</strong> {{ objeto.data_retorno }}</p>
+                        <p><strong>Distância:</strong> {{ objeto.distancia }}</p>
+                        <p><strong>Valor do frete:</strong> R$ {{ objeto.valor_frete }}</p>
+                        <p><strong>Valor do resultado:</strong> R$ {{ objeto.valor_resultado }}</p>
+                        <p><strong>Status:</strong> {{ objeto.status }}</p>
+                    </div>
 
-<hr>
+                </div>
 
-<a href="{% url 'viagem_update' objeto.pk %}">
-    Editar
-</a>
+                <div class="ln_solid"></div>
 
-|
+                <a href="{% url 'viagem_update' objeto.pk %}" class="btn btn-warning">
+                    <i class="fa fa-pencil"></i> Editar
+                </a>
 
-<a href="{% url 'viagem_delete' objeto.pk %}">
-    Excluir
-</a>
+                <a href="{% url 'viagem_delete' objeto.pk %}" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Excluir
+                </a>
 
-|
+                <a href="{% url 'viagem_list' %}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
 
-<a href="{% url 'viagem_list' %}">
-    Voltar para a lista
-</a>
-```
+            </div>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+{% endblock %}

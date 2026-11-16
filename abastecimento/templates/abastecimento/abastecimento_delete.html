@@ -1,52 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Excluir Abastecimento</title>
-</head>
-<body>
 
-    <h1>Excluir Abastecimento</h1>
+{% extends 'base.html' %}
 
-    <p>
-        Tem certeza que deseja excluir este abastecimento?
-    </p>
+{% block title %}Excluir Abastecimento | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>Veículo:</strong>
-        {{ objeto.veiculo }}
-        <br>
+{% block content %}
 
-        <strong>Litros:</strong>
-        {{ objeto.litros }}
-        <br>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Excluir Abastecimento</h3>
+    </div>
+</div>
 
-        <strong>Valor:</strong>
-        {{ objeto.valor }}
-        <br>
+<div class="clearfix"></div>
 
-        <strong>Data:</strong>
-        {{ objeto.data }}
-        <br>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-        <strong>Tipo de combustível:</strong>
-        {{ objeto.tipo_combustivel }}
-    </p>
+        <div class="x_panel">
 
-    <form method="POST">
+            <div class="x_title">
+                <h2>Confirmar exclusão</h2>
+                <div class="clearfix"></div>
+            </div>
 
-        {% csrf_token %}
+            <div class="x_content">
 
-        <button type="submit">
-            Sim, excluir
-        </button>
+                <p>Tem certeza que deseja excluir o abastecimento {{ objeto.id }}?</p>
 
-    </form>
+                <form method="POST">
+                    {% csrf_token %}
 
-    <br>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Excluir
+                    </button>
 
-    <a href="{% url 'abastecimento_detail' objeto.pk %}">
-        Cancelar
-    </a>
+                    <a href="{% url 'abastecimento_list' %}" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i> Cancelar
+                    </a>
 
-</body>
-</html>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

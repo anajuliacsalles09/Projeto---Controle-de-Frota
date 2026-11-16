@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from django.db.models import Sum
 
 from .models import Viagem
 from .forms import ViagemForm
@@ -11,7 +12,28 @@ from .forms import ViagemForm
 @permission_required('viagem.view_viagem', raise_exception=True)
 def viagem_list(request):
     objetos = Viagem.objects.all()
-    return render(request, 'viagem/viagem_list.html', {'objetos': objetos})
+
+    quantidade_viagens = objetos.count()
+
+    viagens_em_andamento = objetos.filter(
+        status__iexact='Em andamento'
+    ).count()
+
+    total_fretes = Viagem.objects.aggregate(
+        total=Sum('valor_frete')
+    )['total'] or 0
+
+    total_resultado = Viagem.objects.aggregate(
+        total=Sum('valor_resultado')
+    )['total'] or 0
+
+    return render(request, 'viagem/viagem_list.html', {
+        'objetos': objetos,
+        'quantidade_viagens': quantidade_viagens,
+        'viagens_em_andamento': viagens_em_andamento,
+        'total_fretes': total_fretes,
+        'total_resultado': total_resultado
+    })
 
 
 @login_required
@@ -26,7 +48,6 @@ def viagem_create(request):
             return redirect('viagem_list')
         else:
             messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
-
     else:
         form = ViagemForm()
 
@@ -52,15 +73,15 @@ def viagem_update(request, pk):
             form.save()
             messages.success(request, 'Viagem atualizada com sucesso!')
             return redirect('viagem_detail', pk=objeto.pk)
-
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
     else:
         form = ViagemForm(instance=objeto)
 
-    return render(
-        request,
-        'viagem/viagem_form.html',
-        {'form': form, 'objeto': objeto}
-    )
+    return render(request, 'viagem/viagem_form.html', {
+        'form': form,
+        'objeto': objeto
+    })
 
 
 @login_required
@@ -73,8 +94,6 @@ def viagem_delete(request, pk):
         messages.success(request, 'Viagem excluída com sucesso!')
         return redirect('viagem_list')
 
-    return render(
-        request,
-        'viagem/viagem_confirm_delete.html',
-        {'objeto': objeto}
-    )
+    return render(request, 'viagem/viagem_confirm_delete.html', {
+        'objeto': objeto
+    })

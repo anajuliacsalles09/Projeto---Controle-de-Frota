@@ -1,3 +1,4 @@
+
 from django.db import models
 
 
@@ -9,3 +10,6 @@ class Veiculo(models.Model):
     quilometragem = models.FloatField()
     status = models.CharField(max_length=50)
     capacidade_carga = models.FloatField()
+
+    def __str__(self):
+        return f'{self.modelo} - {self.placa}'

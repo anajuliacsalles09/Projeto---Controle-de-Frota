@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Criar conta | Controle de Frota{% endblock %}
@@ -60,12 +61,15 @@
 
                     </div>
 
+                    <div class="ln_solid"></div>
+
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-check"></i>
                         Criar conta
                     </button>
 
-                    <a href="{% url 'login' %}" class="btn btn-default">
+                    <a href="{% url 'login' %}" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i>
                         Voltar para o login
                     </a>
 

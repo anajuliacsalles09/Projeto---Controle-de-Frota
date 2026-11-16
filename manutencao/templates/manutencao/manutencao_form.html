@@ -1,22 +1,60 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastrar Manutenção</title>
-</head>
-<body>
 
-    <h1>Cadastrar Manutenção</h1>
+{% extends 'base.html' %}
 
-    <form method="post">
-        {% csrf_token %}
+{% block title %}Cadastrar Manutenção | Controle de Frota{% endblock %}
 
-        {{ form.as_p }}
+{% block content %}
 
-        <button type="submit">Cadastrar</button>
-    </form>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Cadastrar Manutenção</h3>
+    </div>
+</div>
 
-    <a href="{% url 'manutencao_list' %}">Voltar para a lista</a>
+<div class="clearfix"></div>
 
-</body>
-</html>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+
+        <div class="x_panel">
+
+            <div class="x_title">
+                <h2>Dados da manutenção</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <form method="POST" class="form-horizontal form-label-left">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {{ form.as_p }}
+
+                    <div class="ln_solid"></div>
+
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> Salvar manutenção
+                        </button>
+
+                        <a href="{% url 'manutencao_list' %}" class="btn btn-primary">
+                            <i class="fa fa-arrow-left"></i> Voltar
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

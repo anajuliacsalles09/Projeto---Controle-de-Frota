@@ -1,5 +1,8 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
+from django.db.models import Sum
 
 from .models import Carga
 from .forms import CargaForm
@@ -10,8 +13,21 @@ from .forms import CargaForm
 def carga_list(request):
     objetos = Carga.objects.all()
 
+    quantidade_cargas = objetos.count()
+
+    peso_total = Carga.objects.aggregate(
+        total=Sum('peso')
+    )['total'] or 0
+
+    valor_total = Carga.objects.aggregate(
+        total=Sum('valor')
+    )['total'] or 0
+
     return render(request, 'carga/carga_list.html', {
-        'objetos': objetos
+        'objetos': objetos,
+        'quantidade_cargas': quantidade_cargas,
+        'peso_total': peso_total,
+        'valor_total': valor_total
     })
 
 
@@ -23,7 +39,10 @@ def carga_create(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Carga cadastrada com sucesso!')
             return redirect('carga_list')
+        else:
+            messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
     else:
         form = CargaForm()
 
@@ -52,7 +71,10 @@ def carga_update(request, pk):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Carga atualizada com sucesso!')
             return redirect('carga_detail', pk=objeto.pk)
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
     else:
         form = CargaForm(instance=objeto)
 
@@ -69,6 +91,7 @@ def carga_delete(request, pk):
 
     if request.method == 'POST':
         objeto.delete()
+        messages.success(request, 'Carga excluída com sucesso!')
         return redirect('carga_list')
 
     return render(request, 'carga/carga_delete.html', {

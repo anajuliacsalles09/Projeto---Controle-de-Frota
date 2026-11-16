@@ -1,70 +1,115 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Abastecimentos</title>
-</head>
-<body>
 
-    <h1>Lista de Abastecimentos</h1>
+{% extends 'base.html' %}
 
-    <a href="{% url 'abastecimento_create' %}">
-        Criar novo abastecimento
-    </a>
+{% block title %}Abastecimentos | Controle de Frota{% endblock %}
 
-    <hr>
+{% block content %}
 
-    {% for objeto in objetos %}
+<div class="page-title">
+    <div class="title_left">
+        <h3>Abastecimentos <small>Gerenciamento de abastecimentos</small></h3>
+    </div>
 
-        <h2>Abastecimento {{ objeto.id }}</h2>
-
-        <p>
-            <strong>Veículo:</strong>
-            {{ objeto.veiculo }}
-        </p>
-
-        <p>
-            <strong>Litros:</strong>
-            {{ objeto.litros }}
-        </p>
-
-        <p>
-            <strong>Valor:</strong>
-            {{ objeto.valor }}
-        </p>
-
-        <p>
-            <strong>Data:</strong>
-            {{ objeto.data }}
-        </p>
-
-        <p>
-            <strong>Tipo de combustível:</strong>
-            {{ objeto.tipo_combustivel }}
-        </p>
-
-        <a href="{% url 'abastecimento_detail' objeto.pk %}">
-            Ver detalhes
+    <div class="title_right">
+        <a href="{% url 'abastecimento_create' %}" class="btn btn-primary pull-right">
+            <i class="fa fa-plus"></i> Novo abastecimento
         </a>
+    </div>
+</div>
 
-        |
+<div class="clearfix"></div>
 
-        <a href="{% url 'abastecimento_update' objeto.pk %}">
-            Editar
-        </a>
+<div class="row">
 
-        |
+    <div class="col-md-4 col-sm-4">
+        <div class="x_panel">
+            <div class="x_content">
+                <h4>Total de abastecimentos</h4>
+                <h2>{{ quantidade_abastecimentos|default:"0" }}</h2>
+            </div>
+        </div>
+    </div>
 
-        <a href="{% url 'abastecimento_delete' objeto.pk %}">
-            Excluir
-        </a>
+    <div class="col-md-4 col-sm-4">
+        <div class="x_panel">
+            <div class="x_content">
+                <h4>Total de litros</h4>
+                <h2>{{ total_litros|default:"0" }}</h2>
+            </div>
+        </div>
+    </div>
 
-        <hr>
+    <div class="col-md-4 col-sm-4">
+        <div class="x_panel">
+            <div class="x_content">
+                <h4>Valor total</h4>
+                <h2>R$ {{ valor_total|default:"0" }}</h2>
+            </div>
+        </div>
+    </div>
 
-    {% empty %}
+</div>
 
-        <p>Nenhum abastecimento cadastrado.</p>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-    {% endfor %}
+        <div class="x_panel">
 
-</body>
-</html>
+            <div class="x_title">
+                <h2>Lista de abastecimentos</h2>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Veículo</th>
+                            <th>Litros</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                            <th>Tipo de combustível</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for objeto in objetos %}
+                        <tr>
+                            <td>{{ objeto.id }}</td>
+                            <td>{{ objeto.veiculo }}</td>
+                            <td>{{ objeto.litros }}</td>
+                            <td>R$ {{ objeto.valor }}</td>
+                            <td>{{ objeto.data }}</td>
+                            <td>{{ objeto.tipo_combustivel }}</td>
+                            <td>
+                                <a href="{% url 'abastecimento_detail' objeto.pk %}" class="btn btn-info btn-xs">
+                                    Ver
+                                </a>
+
+                                <a href="{% url 'abastecimento_update' objeto.pk %}" class="btn btn-warning btn-xs">
+                                    Editar
+                                </a>
+
+                                <a href="{% url 'abastecimento_delete' objeto.pk %}" class="btn btn-danger btn-xs">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">Nenhum abastecimento cadastrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

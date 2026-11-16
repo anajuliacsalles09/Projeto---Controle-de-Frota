@@ -1,29 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Criar Carga</title>
-</head>
-<body>
 
-    <h1>Criar Carga</h1>
+{% extends 'base.html' %}
 
-    <form method="POST">
+{% block title %}Cadastrar Carga | Controle de Frota{% endblock %}
 
-        {% csrf_token %}
+{% block content %}
 
-        {{ form.as_p }}
+<div class="page-title">
+    <div class="title_left">
+        <h3>Cadastrar Carga</h3>
+    </div>
+</div>
 
-        <button type="submit">
-            Salvar
-        </button>
+<div class="clearfix"></div>
 
-    </form>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-    <br>
+        <div class="x_panel">
 
-    <a href="{% url 'carga_list' %}">
-        Voltar para a lista
-    </a>
+            <div class="x_title">
+                <h2>Dados da carga</h2>
+                <div class="clearfix"></div>
+            </div>
 
-</body>
-</html>
+            <div class="x_content">
+
+                <form method="POST" class="form-horizontal form-label-left">
+
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    {{ form.as_p }}
+
+                    <div class="ln_solid"></div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i> Salvar carga
+                        </button>
+
+                        <a href="{% url 'carga_list' %}" class="btn btn-primary">
+                            <i class="fa fa-arrow-left"></i> Voltar
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

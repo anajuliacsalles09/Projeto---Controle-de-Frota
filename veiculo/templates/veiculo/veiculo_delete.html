@@ -1,44 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Excluir Veículo</title>
-</head>
-<body>
 
-    <h1>Excluir Veículo</h1>
+{% extends 'base.html' %}
 
-    <p>
-        Tem certeza que deseja excluir este veículo?
-    </p>
+{% block title %}Excluir Veículo | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>Placa:</strong>
-        {{ objeto.placa }}
-        <br>
+{% block content %}
 
-        <strong>Modelo:</strong>
-        {{ objeto.modelo }}
-        <br>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Excluir Veículo</h3>
+    </div>
+</div>
 
-        <strong>Marca:</strong>
-        {{ objeto.marca }}
-    </p>
+<div class="clearfix"></div>
 
-    <form method="POST">
+<div class="row">
+    <div class="col-md-12">
 
-        {% csrf_token %}
+        <div class="x_panel">
 
-        <button type="submit">
-            Sim, excluir
-        </button>
+            <div class="x_title">
+                <h2>Confirmar exclusão</h2>
+                <div class="clearfix"></div>
+            </div>
 
-    </form>
+            <div class="x_content">
 
-    <br>
+                <p>Tem certeza que deseja excluir o veículo {{ objeto.placa }}?</p>
 
-    <a href="{% url 'veiculo_detail' objeto.pk %}">
-        Cancelar
-    </a>
+                <form method="POST">
+                    {% csrf_token %}
 
-</body>
-</html>
+                    <button type="submit" class="btn btn-danger">
+                        Excluir
+                    </button>
+
+                    <a href="{% url 'veiculo_list' %}" class="btn btn-primary">
+                        Cancelar
+                    </a>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

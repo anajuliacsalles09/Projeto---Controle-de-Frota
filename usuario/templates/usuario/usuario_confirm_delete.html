@@ -1,42 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Excluir Usuário</title>
-</head>
-<body>
 
-    <h1>Excluir Usuário</h1>
+{% extends 'base.html' %}
 
-    <p>
-        Tem certeza que deseja excluir este usuário?
-    </p>
+{% block title %}Excluir Usuário | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>Nome:</strong>
-        {{ objeto.nome }}
-    </p>
+{% block content %}
 
-    <p>
-        <strong>CPF:</strong>
-        {{ objeto.cpf }}
-    </p>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Excluir Usuário</h3>
+    </div>
+</div>
 
-    <p>
-        <strong>Telefone:</strong>
-        {{ objeto.telefone }}
-    </p>
+<div class="clearfix"></div>
 
-    <form method="post">
-        {% csrf_token %}
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-        <button type="submit">
-            Sim, excluir
-        </button>
+        <div class="x_panel">
 
-        <a href="{% url 'usuario_detail' objeto.pk %}">
-            Cancelar
-        </a>
-    </form>
+            <div class="x_title">
+                <h2>Confirmar exclusão</h2>
+                <div class="clearfix"></div>
+            </div>
 
-</body>
-</html>
+            <div class="x_content">
+
+                <p>Tem certeza que deseja excluir este usuário?</p>
+
+                <p>
+                    <strong>Nome:</strong> {{ objeto.nome }}
+                </p>
+
+                <p>
+                    <strong>CPF:</strong> {{ objeto.cpf }}
+                </p>
+
+                <p>
+                    <strong>Telefone:</strong> {{ objeto.telefone }}
+                </p>
+
+                <div class="ln_solid"></div>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Sim, excluir
+                    </button>
+
+                    <a href="{% url 'usuario_detail' objeto.pk %}" class="btn btn-primary">
+                        <i class="fa fa-arrow-left"></i> Cancelar
+                    </a>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

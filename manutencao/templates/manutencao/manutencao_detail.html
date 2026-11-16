@@ -1,55 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalhes da Manutenção</title>
-</head>
-<body>
 
-    <h1>Detalhes da Manutenção</h1>
+{% extends 'base.html' %}
 
-    <p>
-        <strong>Veículo:</strong>
-        {{ objeto.veiculo }}
-    </p>
+{% block title %}Detalhes da Manutenção | Controle de Frota{% endblock %}
 
-    <p>
-        <strong>Tipo:</strong>
-        {{ objeto.tipo }}
-    </p>
+{% block content %}
 
-    <p>
-        <strong>Descrição:</strong>
-        {{ objeto.descricao }}
-    </p>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Detalhes da Manutenção</h3>
+    </div>
+</div>
 
-    <p>
-        <strong>Data:</strong>
-        {{ objeto.data }}
-    </p>
+<div class="clearfix"></div>
 
-    <p>
-        <strong>Valor:</strong>
-        {{ objeto.valor }}
-    </p>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
 
-    <br>
+        <div class="x_panel">
 
-    <a href="{% url 'manutencao_update' objeto.pk %}">
-        Editar
-    </a>
+            <div class="x_title">
+                <h2>Informações da manutenção</h2>
+                <div class="clearfix"></div>
+            </div>
 
-    |
+            <div class="x_content">
 
-    <a href="{% url 'manutencao_delete' objeto.pk %}">
-        Excluir
-    </a>
+                <div class="row">
 
-    |
+                    <div class="col-md-6">
+                        <p><strong>Veículo:</strong> {{ manutencao.veiculo }}</p>
+                        <p><strong>Tipo:</strong> {{ manutencao.tipo }}</p>
+                        <p><strong>Descrição:</strong> {{ manutencao.descricao }}</p>
+                    </div>
 
-    <a href="{% url 'manutencao_list' %}">
-        Voltar para a lista
-    </a>
+                    <div class="col-md-6">
+                        <p><strong>Data:</strong> {{ manutencao.data }}</p>
+                        <p><strong>Valor:</strong> R$ {{ manutencao.valor }}</p>
+                    </div>
 
-</body>
-</html>
+                </div>
+
+                <div class="ln_solid"></div>
+
+                <a href="{% url 'manutencao_list' %}" class="btn btn-primary">
+                    <i class="fa fa-arrow-left"></i> Voltar
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

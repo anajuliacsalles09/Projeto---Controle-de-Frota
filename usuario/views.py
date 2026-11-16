@@ -28,6 +28,11 @@ def usuario_register(request):
             )
 
             return redirect('login')
+        else:
+            messages.error(
+                request,
+                'Não foi possível criar a conta. Verifique os campos.'
+            )
 
     else:
         form = UsuarioRegistroForm()
@@ -45,10 +50,25 @@ def usuario_list(request):
 
     objetos = Usuario.objects.all().order_by('nome')
 
+    quantidade_usuarios = objetos.count()
+
+    quantidade_administradores = objetos.filter(
+        tipo='ADMIN'
+    ).count()
+
+    quantidade_funcionarios = objetos.filter(
+        tipo='FUNCIONARIO'
+    ).count()
+
     return render(
         request,
         'usuario/usuario_list.html',
-        {'objetos': objetos}
+        {
+            'objetos': objetos,
+            'quantidade_usuarios': quantidade_usuarios,
+            'quantidade_administradores': quantidade_administradores,
+            'quantidade_funcionarios': quantidade_funcionarios
+        }
     )
 
 
@@ -68,6 +88,11 @@ def usuario_create(request):
             )
 
             return redirect('usuario_list')
+        else:
+            messages.error(
+                request,
+                'Não foi possível cadastrar. Verifique os campos.'
+            )
 
     else:
         form = UsuarioForm()
@@ -110,6 +135,11 @@ def usuario_update(request, pk):
             )
 
             return redirect('usuario_detail', pk=objeto.pk)
+        else:
+            messages.error(
+                request,
+                'Não foi possível atualizar. Verifique os campos.'
+            )
 
     else:
         form = UsuarioUpdateForm(instance=objeto)
@@ -145,4 +175,3 @@ def usuario_delete(request, pk):
         'usuario/usuario_confirm_delete.html',
         {'objeto': objeto}
     )
-
