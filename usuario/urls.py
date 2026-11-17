@@ -5,18 +5,12 @@ from . import views
 
 
 urlpatterns = [
-    # Cadastro público
+    # Endereço antigo de cadastro: acesso restrito aos administradores.
     path('registrar/', views.usuario_register, name='usuario_register'),
 
     # Login e logout
-    path(
-        'login/',
-        auth_views.LoginView.as_view(
-            template_name='usuario/login.html',
-            redirect_authenticated_user=True
-        ),
-        name='login'
-    ),
+    path('login/', views.escolher_acesso, name='login'),
+    path('login/<str:perfil>/', views.PerfilLoginView.as_view(), name='login_perfil'),
 
     path(
         'logout/',

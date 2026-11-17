@@ -1,7 +1,10 @@
 {% extends 'crud/form.html' %}
-{% block title %}Entrar | Controle de Frota{% endblock %}
-{% block form_heading %}Entrar{% endblock %}
+{% block title %}Entrar como {{ perfil_label }} | Controle de Frota{% endblock %}
+{% block form_heading %}Entrar como {{ perfil_label }}{% endblock %}
 {% block form_description %}Use seu nome de usuário e sua senha para acessar o sistema.{% endblock %}
 {% block form_panel_title %}Acesso à conta{% endblock %}
 {% block form_page_class %}auth-form-page auth-form-page-narrow{% endblock %}
-{% block form_actions %}{% include 'partials/form_actions.html' with submit_label='Entrar' cancel_url='usuario_register' cancel_label='Criar conta' %}{% endblock %}
+{% block form_actions %}
+<button type="submit" class="btn btn-success"><i class="fa fa-sign-in" aria-hidden="true"></i> Entrar</button>
+<a href="{{ escolha_acesso_url }}" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Trocar perfil</a>
+{% endblock %}

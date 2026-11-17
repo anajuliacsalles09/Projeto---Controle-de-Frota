@@ -40,6 +40,19 @@ ao usuario continuam valendo. Alterar o tipo para `ADMIN` remove o vinculo com
 o grupo `Funcionario`; as permissoes administrativas continuam sendo gerenciadas
 separadamente, sem promover a conta a superusuario.
 
+## Acesso ao sistema privado
+
+O painel e os sete modulos exigem login. A entrada em `/usuarios/login/`
+apresenta os quadros Administrador e Funcionario; cada opcao abre o formulario
+de login correspondente. O perfil e conferido depois da senha: superusuarios
+e contas `Usuario.tipo = ADMIN` usam Administrador, e as demais usam Funcionario.
+Escolher um quadro nao atribui grupos nem permissoes.
+
+O cadastro publico foi desativado. Novas contas sao criadas pela tela interna
+de usuarios por administradores com a permissao `usuario.add_usuario`. O endereco antigo
+`/usuarios/registrar/` agora exige essa permissao e redireciona para o cadastro
+interno. As contas existentes e suas permissoes foram preservadas.
+
 ## Git
 
 A branch `main` acompanha `origin/main`. Antes de enviar alteracoes:

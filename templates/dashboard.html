@@ -25,9 +25,7 @@
         <h2 id="welcome-title">Bem-vindo ao Controle de Frota</h2>
         {% endif %}
         <p>
-            {% if public_dashboard %}
-                Consulte os indicadores e os últimos registros da frota. Entre ou cadastre-se para registrar suas operações.
-            {% elif perms.usuario.view_usuario %}
+            {% if perms.usuario.view_usuario %}
                 Acompanhe a frota, consulte os últimos registros e gerencie as operações por aqui.
             {% else %}
                 Consulte sua frota e registre viagens, abastecimentos, manutenções e despesas em um só lugar.
@@ -54,7 +52,7 @@
 
     <div class="fleet-dashboard-columns">
         <div>
-            {% if public_dashboard or perms.viagem.view_viagem %}
+            {% if perms.viagem.view_viagem %}
             <section class="fleet-panel" aria-labelledby="recent-trips-title">
                 <div class="fleet-panel-heading">
                     <h2 id="recent-trips-title"><i class="fa fa-road" aria-hidden="true"></i>Viagens mais recentes</h2>
@@ -87,7 +85,7 @@
             </section>
             {% endif %}
 
-            {% if public_dashboard or perms.despesa.view_despesa %}
+            {% if perms.despesa.view_despesa %}
             <section class="fleet-panel" aria-labelledby="recent-expenses-title">
                 <div class="fleet-panel-heading">
                     <h2 id="recent-expenses-title"><i class="fa fa-money" aria-hidden="true"></i>Últimas despesas</h2>

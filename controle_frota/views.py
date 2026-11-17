@@ -1,6 +1,7 @@
 
 
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from veiculo.models import Veiculo
@@ -8,12 +9,13 @@ from viagem.models import Viagem
 from abastecimento.models import Abastecimento
 from manutencao.models import Manutencao
 from usuario.models import Usuario
+from usuario.permissions import is_administrator
 from carga.models import Carga
 from despesa.models import Despesa
 
 
+@login_required
 def dashboard(request):
-    public_dashboard = not request.user.is_authenticated
     indicadores = []
     resumo = []
     atalhos = []
@@ -38,7 +40,7 @@ def dashboard(request):
     for model, label, link_label, icon in modulos:
         app = model._meta.app_label
         name = model._meta.model_name
-        if public_dashboard or request.user.has_perm(f'{app}.view_{name}'):
+        if request.user.has_perm(f'{app}.view_{name}'):
             item = {
                 'label': label, 'total': model.objects.count(),
                 'url': reverse(f'{name}_list'), 'link_label': link_label,
@@ -48,7 +50,9 @@ def dashboard(request):
                 indicadores.append(item)
             else:
                 resumo.append(item)
-        if request.user.has_perm(f'{app}.add_{name}'):
+        if request.user.has_perm(f'{app}.add_{name}') and (
+            model is not Usuario or is_administrator(request.user)
+        ):
             atalhos.append({
                 'label': nomes_cadastro[name], 'url': reverse(f'{name}_create'),
                 'icon': icon,
@@ -56,13 +60,12 @@ def dashboard(request):
 
     context = {
         'indicadores': indicadores, 'resumo': resumo, 'atalhos': atalhos,
-        'public_dashboard': public_dashboard,
     }
-    if public_dashboard or request.user.has_perm('viagem.view_viagem'):
+    if request.user.has_perm('viagem.view_viagem'):
         context['viagens_recentes'] = Viagem.objects.select_related(
             'veiculo'
         ).order_by('-data_saida', '-pk')[:5]
-    if public_dashboard or request.user.has_perm('despesa.view_despesa'):
+    if request.user.has_perm('despesa.view_despesa'):
         context['despesas_recentes'] = Despesa.objects.select_related(
             'viagem'
         ).order_by('-data', '-pk')[:4]

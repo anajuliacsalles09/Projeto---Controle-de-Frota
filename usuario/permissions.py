@@ -3,8 +3,18 @@
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
 
+from .models import Usuario
+
 
 EMPLOYEE_GROUP = 'Funcionario'
+
+
+def is_administrator(user):
+    return user.is_authenticated and (
+        user.is_superuser or Usuario.objects.filter(pk=user.pk, tipo='ADMIN').exists()
+    )
+
+
 EMPLOYEE_PERMISSIONS = (
     ('abastecimento', 'add_abastecimento'),
     ('abastecimento', 'view_abastecimento'),

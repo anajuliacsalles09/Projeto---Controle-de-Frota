@@ -27,12 +27,12 @@
     {% block extra_css %}{% endblock %}
 </head>
 
-<body class="{% if user.is_authenticated or public_dashboard %}nav-md{% else %}login{% endif %}">
+<body class="{% if user.is_authenticated %}nav-md{% else %}login{% endif %}">
 
 <div class="container body">
 <div class="main_container">
 
-{% if user.is_authenticated or public_dashboard %}
+{% if user.is_authenticated %}
 
     <!-- MENU LATERAL -->
     <div class="col-md-3 left_col menu_fixed">
@@ -66,86 +66,86 @@
                             </a>
                         </li>
 
-                        {% if public_dashboard or perms.veiculo.view_veiculo or perms.veiculo.add_veiculo %}<li>
+                        {% if perms.veiculo.view_veiculo or perms.veiculo.add_veiculo %}<li>
                             <a>
                                 <i class="fa fa-truck"></i>
                                 Veículos
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.veiculo.view_veiculo %}<li><a href="{% url 'veiculo_list' %}">Listar veículos</a></li>{% endif %}
+                                {% if perms.veiculo.view_veiculo %}<li><a href="{% url 'veiculo_list' %}">Listar veículos</a></li>{% endif %}
                                 {% if perms.veiculo.add_veiculo %}<li><a href="{% url 'veiculo_create' %}">Cadastrar veículo</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.usuario.view_usuario or perms.usuario.add_usuario %}<li>
+                        {% if perms.usuario.view_usuario or can_register_users %}<li>
                             <a>
                                 <i class="fa fa-users"></i>
                                 Usuários
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.usuario.view_usuario %}<li><a href="{% url 'usuario_list' %}">Listar usuários</a></li>{% endif %}
-                                {% if perms.usuario.add_usuario %}<li><a href="{% url 'usuario_create' %}">Cadastrar usuário</a></li>{% endif %}
+                                {% if perms.usuario.view_usuario %}<li><a href="{% url 'usuario_list' %}">Listar usuários</a></li>{% endif %}
+                                {% if can_register_users %}<li><a href="{% url 'usuario_create' %}">Cadastrar usuário</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.viagem.view_viagem or perms.viagem.add_viagem %}<li>
+                        {% if perms.viagem.view_viagem or perms.viagem.add_viagem %}<li>
                             <a>
                                 <i class="fa fa-road"></i>
                                 Viagens
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.viagem.view_viagem %}<li><a href="{% url 'viagem_list' %}">Listar viagens</a></li>{% endif %}
+                                {% if perms.viagem.view_viagem %}<li><a href="{% url 'viagem_list' %}">Listar viagens</a></li>{% endif %}
                                 {% if perms.viagem.add_viagem %}<li><a href="{% url 'viagem_create' %}">Cadastrar viagem</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.abastecimento.view_abastecimento or perms.abastecimento.add_abastecimento %}<li>
+                        {% if perms.abastecimento.view_abastecimento or perms.abastecimento.add_abastecimento %}<li>
                             <a>
                                 <i class="fa fa-tint"></i>
                                 Abastecimentos
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.abastecimento.view_abastecimento %}<li><a href="{% url 'abastecimento_list' %}">Listar abastecimentos</a></li>{% endif %}
+                                {% if perms.abastecimento.view_abastecimento %}<li><a href="{% url 'abastecimento_list' %}">Listar abastecimentos</a></li>{% endif %}
                                 {% if perms.abastecimento.add_abastecimento %}<li><a href="{% url 'abastecimento_create' %}">Cadastrar abastecimento</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.manutencao.view_manutencao or perms.manutencao.add_manutencao %}<li>
+                        {% if perms.manutencao.view_manutencao or perms.manutencao.add_manutencao %}<li>
                             <a>
                                 <i class="fa fa-wrench"></i>
                                 Manutenções
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.manutencao.view_manutencao %}<li><a href="{% url 'manutencao_list' %}">Listar manutenções</a></li>{% endif %}
+                                {% if perms.manutencao.view_manutencao %}<li><a href="{% url 'manutencao_list' %}">Listar manutenções</a></li>{% endif %}
                                 {% if perms.manutencao.add_manutencao %}<li><a href="{% url 'manutencao_create' %}">Cadastrar manutenção</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.carga.view_carga or perms.carga.add_carga %}<li>
+                        {% if perms.carga.view_carga or perms.carga.add_carga %}<li>
                             <a>
                                 <i class="fa fa-cubes"></i>
                                 Cargas
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.carga.view_carga %}<li><a href="{% url 'carga_list' %}">Listar cargas</a></li>{% endif %}
+                                {% if perms.carga.view_carga %}<li><a href="{% url 'carga_list' %}">Listar cargas</a></li>{% endif %}
                                 {% if perms.carga.add_carga %}<li><a href="{% url 'carga_create' %}">Cadastrar carga</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
 
-                        {% if public_dashboard or perms.despesa.view_despesa or perms.despesa.add_despesa %}<li>
+                        {% if perms.despesa.view_despesa or perms.despesa.add_despesa %}<li>
                             <a>
                                 <i class="fa fa-money"></i>
                                 Despesas
                                 <span class="fa fa-chevron-down"></span>
                             </a>
                             <ul class="nav child_menu">
-                                {% if public_dashboard or perms.despesa.view_despesa %}<li><a href="{% url 'despesa_list' %}">Listar despesas</a></li>{% endif %}
+                                {% if perms.despesa.view_despesa %}<li><a href="{% url 'despesa_list' %}">Listar despesas</a></li>{% endif %}
                                 {% if perms.despesa.add_despesa %}<li><a href="{% url 'despesa_create' %}">Cadastrar despesa</a></li>{% endif %}
                             </ul>
                         </li>{% endif %}
@@ -161,7 +161,7 @@
 {% include 'partials/topbar.html' %}
 
     <div class="right_col" role="main"
-         {% if not user.is_authenticated and not public_dashboard %}style="margin-left:0;"{% endif %}>
+         {% if not user.is_authenticated %}style="margin-left:0;"{% endif %}>
 
         <div class="clearfix"></div>
 
@@ -183,7 +183,7 @@
 
     </div>
 
-    {% if user.is_authenticated or public_dashboard %}
+    {% if user.is_authenticated %}
     <!-- RODAPÉ -->
     <footer>
         <div class="pull-right">

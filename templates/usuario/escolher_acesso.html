@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Escolha seu acesso | Controle de Frota{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/acesso.css' %}?v=20261117-1">{% endblock %}
+{% block content %}
+<section class="access-selection" aria-labelledby="access-title">
+    <span class="access-eyebrow">CONTROLE DE FROTA · ÁREA RESTRITA</span>
+    <h1 id="access-title">Como deseja entrar?</h1>
+    <p class="access-intro">Selecione seu perfil para continuar para o login.</p>
+    <div class="access-options">
+        <a href="{{ login_admin_url }}" class="access-option">
+            <span class="access-option-icon"><i class="fa fa-user-secret" aria-hidden="true"></i></span>
+            <h2>Administrador</h2>
+            <p>Acesse a gestão do sistema e os recursos autorizados para sua conta.</p>
+            <span class="access-continue">Continuar como administrador <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </a>
+        <a href="{{ login_funcionario_url }}" class="access-option">
+            <span class="access-option-icon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+            <h2>Funcionário</h2>
+            <p>Consulte a frota e registre as operações disponíveis para sua conta.</p>
+            <span class="access-continue">Continuar como funcionário <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </a>
+    </div>
+    <p class="access-support"><i class="fa fa-lock" aria-hidden="true"></i> Ainda não tem acesso? Solicite seu cadastro ao administrador.</p>
+</section>
+{% endblock %}

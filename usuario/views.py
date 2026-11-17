@@ -2,46 +2,76 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+from django.urls import reverse
+from django.utils.http import urlencode, url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_GET
 
 from .models import Usuario
+from .permissions import is_administrator
 from .forms import (
     UsuarioForm,
-    UsuarioRegistroForm,
+    PerfilAuthenticationForm,
     UsuarioUpdateForm
 )
 
 
-def usuario_register(request):
+def _proximo_destino(request):
+    destino = request.GET.get('next', '') or request.POST.get('next', '')
+    if url_has_allowed_host_and_scheme(
+        destino, allowed_hosts={request.get_host()}, require_https=request.is_secure()
+    ):
+        return destino
+    return ''
 
+
+def _url_acesso(nome, destino, **kwargs):
+    url = reverse(nome, kwargs=kwargs or None)
+    return f'{url}?{urlencode({"next": destino})}' if destino else url
+
+
+@require_GET
+def escolher_acesso(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
+    destino = _proximo_destino(request)
+    return render(request, 'usuario/escolher_acesso.html', {
+        'login_admin_url': _url_acesso('login_perfil', destino, perfil='admin'),
+        'login_funcionario_url': _url_acesso('login_perfil', destino, perfil='funcionario'),
+    })
 
-    if request.method == 'POST':
-        form = UsuarioRegistroForm(request.POST)
 
-        if form.is_valid():
-            form.save()
+class PerfilLoginView(LoginView):
+    template_name = 'usuario/login.html'
+    authentication_form = PerfilAuthenticationForm
+    redirect_authenticated_user = True
 
-            messages.success(
-                request,
-                'Conta criada com sucesso! Faça login para acessar.'
-            )
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs['perfil'] not in PerfilAuthenticationForm.PERFIS:
+            raise Http404('Perfil de acesso inválido.')
+        return super().dispatch(request, *args, **kwargs)
 
-            return redirect('login')
-        else:
-            messages.error(
-                request,
-                'Não foi possível criar a conta. Verifique os campos.'
-            )
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['perfil'] = self.kwargs['perfil']
+        return kwargs
 
-    else:
-        form = UsuarioRegistroForm()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['perfil_label'] = PerfilAuthenticationForm.PERFIS[self.kwargs['perfil']]
+        context['escolha_acesso_url'] = _url_acesso('login', _proximo_destino(self.request))
+        return context
 
-    return render(
-        request,
-        'usuario/usuario_register.html',
-        {'form': form}
-    )
+
+@login_required
+@permission_required('usuario.add_usuario', raise_exception=True)
+def usuario_register(request):
+    if not is_administrator(request.user):
+        raise PermissionDenied
+    # Compatibilidade com o endereço antigo, agora sem cadastro público.
+    return redirect('usuario_create')
 
 
 @login_required
@@ -75,6 +105,8 @@ def usuario_list(request):
 @login_required
 @permission_required('usuario.add_usuario', raise_exception=True)
 def usuario_create(request):
+    if not is_administrator(request.user):
+        raise PermissionDenied
 
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
