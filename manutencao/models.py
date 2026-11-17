@@ -12,3 +12,10 @@ class Manutencao(models.Model):
     descricao = models.CharField(max_length=255)
     data = models.DateField()
     valor = models.FloatField()
+
+    @classmethod
+    def consultar_historico(cls, veiculo=None):
+        historico = cls.objects.all()
+        if veiculo is not None:
+            historico = historico.filter(veiculo=veiculo)
+        return historico.order_by('-data', '-pk')

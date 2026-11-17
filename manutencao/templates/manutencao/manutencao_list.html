@@ -19,6 +19,15 @@
 
 <div class="clearfix"></div>
 
+<form method="get" class="form-inline" style="margin-bottom:20px;">
+    <label for="historico-veiculo">Histórico por veículo</label>
+    <select id="historico-veiculo" name="veiculo" class="form-control">
+        <option value="">Todos os veículos</option>
+        {% for veiculo in veiculos %}<option value="{{ veiculo.pk }}"{% if veiculo.pk == veiculo_selecionado.pk %} selected{% endif %}>{{ veiculo }}</option>{% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Consultar</button>
+</form>
+
 <div class="row">
 
     <div class="col-md-4 col-sm-4">

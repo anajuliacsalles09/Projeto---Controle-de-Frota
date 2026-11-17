@@ -9,8 +9,8 @@ urlpatterns = [
     path('registrar/', views.usuario_register, name='usuario_register'),
 
     # Login e logout
-    path('login/', views.escolher_acesso, name='login'),
-    path('login/<str:perfil>/', views.PerfilLoginView.as_view(), name='login_perfil'),
+    path('login/', views.ContaLoginView.as_view(), name='login'),
+    path('login/<str:perfil>/', views.escolher_acesso, name='login_perfil'),
 
     path(
         'logout/',

@@ -43,10 +43,11 @@ separadamente, sem promover a conta a superusuario.
 ## Acesso ao sistema privado
 
 O painel e os sete modulos exigem login. A entrada em `/usuarios/login/`
-apresenta os quadros Administrador e Funcionario; cada opcao abre o formulario
-de login correspondente. O perfil e conferido depois da senha: superusuarios
-e contas `Usuario.tipo = ADMIN` usam Administrador, e as demais usam Funcionario.
-Escolher um quadro nao atribui grupos nem permissoes.
+apresenta um unico formulario de nome de usuario e senha. O sistema identifica
+o perfil pela conta autenticada: superusuarios e contas `Usuario.tipo = ADMIN`
+sao administradores; as demais sao funcionarios. O login nao altera grupos,
+perfis ou permissoes. Os links antigos de login por perfil redirecionam ao
+formulario unico, preservando o destino interno solicitado.
 
 O cadastro publico foi desativado. Novas contas sao criadas pela tela interna
 de usuarios por administradores com a permissao `usuario.add_usuario`. O endereco antigo
@@ -64,3 +65,53 @@ git diff --cached
 ```
 
 A remocao do banco e dos caches do versionamento preserva os arquivos locais, mas nao remove copias de commits antigos. A chave anteriormente escrita no codigo foi substituida; o historico remoto nao foi reescrito.
+
+
+## Calculo da distancia das viagens
+
+O calculo usa apenas Python e Django, sem mapas, APIs ou consultas externas.
+No cadastro, informe a quilometragem de saida e a de chegada, conforme o
+painel do veiculo. Ao salvar, o sistema calcula e registra automaticamente:
+
+    distancia = quilometragem de chegada - quilometragem de saida
+
+Para incluir ida e volta, registre a chegada depois do retorno. Origem e
+destino continuam como informacoes da viagem, sem calcular rotas.
+Os valores nao podem ser negativos, e a chegada nao pode ser menor que a
+saida. O resultado nao pode ser digitado ou alterado pelo formulario.
+
+As viagens antigas preservam sua distancia. Ao edita-las, pode-se preencher
+as duas leituras para recalcular ou deixar ambas vazias para manter o valor
+anterior. Novas viagens exigem as duas leituras. Os valores aparecem na
+tela de detalhes. Depois de atualizar o codigo, execute `python manage.py migrate`.
+
+
+## Operacoes do diagrama de classes
+
+Os sete modulos possuem cadastrar/registrar, listar/consultar, detalhar,
+editar/atualizar e excluir implementados em views baseadas em funcoes
+(FBVs). O login e logout usam django.contrib.auth. Os models representam
+os dados e relacionamentos do diagrama; nao e necessario duplicar os CRUDs
+como metodos dos models.
+
+Calculos previstos no diagrama:
+- `Despesa.calcular_total(viagem=None)`: soma as despesas de uma viagem;
+  sem o argumento, retorna o total geral. A listagem de despesas usa esse metodo.
+- `Viagem.calcular_resultado()`: valor do frete menos o total das despesas
+  vinculadas a essa viagem, arredondado em duas casas. O resultado pode
+  ser negativo. Cargas, abastecimentos e manutencoes nao sao descontados
+  automaticamente porque o diagrama nao os define como despesas da viagem.
+- O resultado e gravado ao salvar a viagem e atualizado pelos sinais do
+  Django quando despesas sao criadas, alteradas, movidas ou excluidas,
+  inclusive pelo Admin. Nao e preenchido manualmente no formulario.
+  Alteracoes por `QuerySet.update` ou operacoes em lote que nao disparam
+  sinais devem recalcular explicitamente os resultados.
+- `Manutencao.consultar_historico(veiculo=None)` corresponde a
+  `consultarHistorico()` do diagrama: retorna registros do mais recente
+  para o mais antigo, com filtro opcional por veiculo. A listagem oferece
+  a selecao do veiculo e atualiza os totais conforme o filtro.
+
+Os campos extras `Usuario.tipo`, `Viagem.km_saida` e `Viagem.km_chegada`
+foram mantidos para as funcionalidades solicitadas. O CEP permanece como
+texto para preservar zeros iniciais. Essas diferencas devem constar na
+versao atualizada do diagrama.

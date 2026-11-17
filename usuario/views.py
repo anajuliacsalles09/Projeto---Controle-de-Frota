@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
+from django.db.models import F, Q
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
@@ -13,7 +15,6 @@ from .models import Usuario
 from .permissions import is_administrator
 from .forms import (
     UsuarioForm,
-    PerfilAuthenticationForm,
     UsuarioUpdateForm
 )
 
@@ -32,37 +33,15 @@ def _url_acesso(nome, destino, **kwargs):
     return f'{url}?{urlencode({"next": destino})}' if destino else url
 
 
-@require_GET
-def escolher_acesso(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    destino = _proximo_destino(request)
-    return render(request, 'usuario/escolher_acesso.html', {
-        'login_admin_url': _url_acesso('login_perfil', destino, perfil='admin'),
-        'login_funcionario_url': _url_acesso('login_perfil', destino, perfil='funcionario'),
-    })
-
-
-class PerfilLoginView(LoginView):
+class ContaLoginView(LoginView):
     template_name = 'usuario/login.html'
-    authentication_form = PerfilAuthenticationForm
     redirect_authenticated_user = True
 
-    def dispatch(self, request, *args, **kwargs):
-        if kwargs['perfil'] not in PerfilAuthenticationForm.PERFIS:
-            raise Http404('Perfil de acesso inválido.')
-        return super().dispatch(request, *args, **kwargs)
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['perfil'] = self.kwargs['perfil']
-        return kwargs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['perfil_label'] = PerfilAuthenticationForm.PERFIS[self.kwargs['perfil']]
-        context['escolha_acesso_url'] = _url_acesso('login', _proximo_destino(self.request))
-        return context
+@require_GET
+def escolher_acesso(request, perfil=None):
+    # Mantem links antigos funcionando com o formulario unico.
+    return redirect(_url_acesso('login', _proximo_destino(request)))
 
 
 @login_required
@@ -78,17 +57,16 @@ def usuario_register(request):
 @permission_required('usuario.view_usuario', raise_exception=True)
 def usuario_list(request):
 
-    objetos = Usuario.objects.all().order_by('nome')
-
+    objetos = User.objects.annotate(
+        nome=F('usuario__nome'),
+        cpf=F('usuario__cpf'),
+        tipo=F('usuario__tipo'),
+        perfil_id=F('usuario__pk'),
+    ).order_by('nome', 'username')
+    administradores = Q(is_superuser=True) | Q(usuario__tipo='ADMIN')
     quantidade_usuarios = objetos.count()
-
-    quantidade_administradores = objetos.filter(
-        tipo='ADMIN'
-    ).count()
-
-    quantidade_funcionarios = objetos.filter(
-        tipo='FUNCIONARIO'
-    ).count()
+    quantidade_administradores = objetos.filter(administradores).count()
+    quantidade_funcionarios = objetos.exclude(administradores).count()
 
     return render(
         request,

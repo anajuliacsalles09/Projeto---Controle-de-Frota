@@ -58,6 +58,8 @@ def viagem_create(request):
 @permission_required('viagem.view_viagem', raise_exception=True)
 def viagem_detail(request, pk):
     objeto = get_object_or_404(Viagem, pk=pk)
+    from despesa.models import Despesa
+    objeto.total_despesas = Despesa.calcular_total(objeto)
     return render(request, 'viagem/viagem_detail.html', {'objeto': objeto})
 
 

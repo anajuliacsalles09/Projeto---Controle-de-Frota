@@ -1,26 +1,8 @@
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 from .models import Usuario
 from .permissions import is_administrator
-
-
-class PerfilAuthenticationForm(AuthenticationForm):
-    PERFIS = {'admin': 'Administrador', 'funcionario': 'Funcionário'}
-
-    def __init__(self, *args, perfil, **kwargs):
-        self.perfil = perfil
-        super().__init__(*args, **kwargs)
-
-    def confirm_login_allowed(self, user):
-        super().confirm_login_allowed(user)
-        administrador = is_administrator(user)
-        if administrador != (self.perfil == 'admin'):
-            raise forms.ValidationError(
-                'Esta conta não corresponde ao perfil selecionado. '
-                'Clique em "Trocar perfil" e escolha o acesso correto.',
-                code='perfil_incorreto',
-            )
 
 
 class UsuarioRegistroForm(UserCreationForm):

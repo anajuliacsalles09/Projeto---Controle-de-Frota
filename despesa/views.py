@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from django.db.models import Sum
 
 from .models import Despesa
 from .forms import DespesaForm
@@ -12,9 +11,7 @@ from .forms import DespesaForm
 def despesa_list(request):
     objetos = Despesa.objects.all()
 
-    total_despesas = Despesa.objects.aggregate(
-        total=Sum('valor')
-    )['total'] or 0
+    total_despesas = Despesa.calcular_total()
 
     quantidade_despesas = objetos.count()
 

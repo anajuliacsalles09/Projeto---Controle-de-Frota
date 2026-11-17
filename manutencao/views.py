@@ -5,12 +5,17 @@ from django.contrib import messages
 
 from .models import Manutencao
 from .forms import ManutencaoForm
+from veiculo.models import Veiculo
 
 
 @login_required
 @permission_required('manutencao.view_manutencao', raise_exception=True)
 def manutencao_list(request):
-    objetos = Manutencao.objects.all()
+    veiculo_id = request.GET.get('veiculo', '')
+    selecionado = None
+    if veiculo_id:
+        selecionado = get_object_or_404(Veiculo, pk=veiculo_id) if veiculo_id.isdecimal() else None
+    objetos = Manutencao.consultar_historico(selecionado)
 
     quantidade_manutencoes = objetos.count()
     valor_total = sum(manutencao.valor for manutencao in objetos)
@@ -20,6 +25,8 @@ def manutencao_list(request):
         'manutencao/manutencao_list.html',
         {
             'objetos': objetos,
+            'veiculos': Veiculo.objects.order_by('placa'),
+            'veiculo_selecionado': selecionado,
             'quantidade_manutencoes': quantidade_manutencoes,
             'valor_total': valor_total
         }

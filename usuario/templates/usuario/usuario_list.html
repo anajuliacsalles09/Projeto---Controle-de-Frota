@@ -84,10 +84,10 @@
 
                             {% for objeto in objetos %}
                             <tr>
-                                <td>{{ objeto.nome }}</td>
+                                <td>{{ objeto.nome|default:objeto.username }}</td>
                                 <td>{{ objeto.username }}</td>
                                 <td>{{ objeto.email }}</td>
-                                <td>{{ objeto.cpf }}</td>
+                                <td>{{ objeto.cpf|default:"?" }}</td>
 
                                 <td>
                                     {% if objeto.is_superuser or objeto.tipo == 'ADMIN' %}
@@ -97,7 +97,7 @@
                                     {% endif %}
                                 </td>
 
-                                <td>{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='usuario_detail' update_url='usuario_update' delete_url='usuario_delete' list_url='usuario_list' can_edit=perms.usuario.change_usuario can_delete=perms.usuario.delete_usuario %}</td>
+                                <td>{% if objeto.perfil_id %}{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='usuario_detail' update_url='usuario_update' delete_url='usuario_delete' list_url='usuario_list' can_edit=perms.usuario.change_usuario can_delete=perms.usuario.delete_usuario %}{% else %}<span class="text-muted">Conta de acesso</span>{% endif %}</td>
                             </tr>
 
                             {% empty %}

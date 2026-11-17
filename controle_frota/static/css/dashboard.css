@@ -14,12 +14,12 @@
 .fleet-welcome {
     padding: 20px 24px;
     margin-bottom: 24px;
-    border: 1px solid #dceae6;
+    border: 1px solid #dcecf4;
     border-radius: 16px;
-    background: linear-gradient(110deg, #e4f4ef, #f5faf8);
+    background: linear-gradient(110deg, #e2f4fc, #f5fbff);
     box-shadow: 0 1px 5px rgba(35, 52, 71, .07);
 }
-.fleet-welcome-eyebrow { display: block; margin-bottom: 10px; color: #157560; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+.fleet-welcome-eyebrow { display: block; margin-bottom: 10px; color: #0b6fb3; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
 .fleet-welcome h2 { margin: 0 0 7px; font-size: 23px; }
 .fleet-welcome p { margin: 0; color: #52677d; }
 .fleet-metrics {
@@ -41,15 +41,15 @@
     position: absolute; right: 16px; top: 20px;
     display: flex; align-items: center; justify-content: center;
     width: 38px; height: 38px; border-radius: 11px;
-    color: #157a65; background: #e6f5ef; font-size: 18px;
+    color: #13a8df; background: #e2f4fc; font-size: 18px;
 }
 .fleet-metric-link {
     display: flex; align-items: center; justify-content: space-between;
     gap: 8px; padding: 12px 20px;
-    border-top: 1px solid #edf3f0;
-    color: #157560; font-size: 11px; font-weight: 600;
+    border-top: 1px solid #e3e7eb;
+    color: #0b6fb3; font-size: 11px; font-weight: 600;
 }
-.fleet-metric-link:hover, .fleet-metric-link:focus { color: #10634f; background: #f0f9f5; }
+.fleet-metric-link:hover, .fleet-metric-link:focus { color: #09568c; background: #eef8fd; }
 .fleet-dashboard-columns { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 24px; }
 .fleet-dashboard-columns > div { min-width: 0; }
 .fleet-panel {
@@ -70,12 +70,12 @@
 }
 .fleet-panel-heading h2 { margin: 0; font-size: 16px; }
 .fleet-panel-heading h2 i { margin-right: 8px; color: #64788c; }
-.fleet-panel-heading > a { font-size: 12px; color: #176f5d; white-space: nowrap; }
+.fleet-panel-heading > a { font-size: 12px; color: #0b6fb3; white-space: nowrap; }
 .fleet-dashboard .table { margin-bottom: 0; border-radius: 0; }
 .fleet-dashboard .table-responsive { margin-bottom: 0; border: 0; }
 .fleet-dashboard .table > thead > tr > th { font-size: 10px; padding: 13px 16px; }
 .fleet-dashboard .table > tbody > tr > td { padding: 14px 16px; font-size: 12px; }
-.fleet-route { display: block; font-weight: 600; color: #176f5d; }
+.fleet-route { display: block; font-weight: 600; color: #0b6fb3; }
 .fleet-status { display: inline-block; padding: 4px 9px; border-radius: 5px; background: #edf3f7; color: #455e73; }
 .fleet-panel-list { margin: 0; padding: 0; list-style: none; }
 .fleet-panel-list > li + li { border-top: 1px solid #edf1f5; }
@@ -87,7 +87,7 @@
     color: #40576c;
 }
 .fleet-panel-list a:hover, .fleet-panel-list a:focus { background: #f1f8f5; }
-.fleet-panel-list a > i:first-child { color: #16866e; width: 20px; text-align: center; }
+.fleet-panel-list a > i:first-child { color: #0b6fb3; width: 20px; text-align: center; }
 .fleet-panel-list .fleet-list-main { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .fleet-panel-list small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
 .fleet-panel-list strong { white-space: nowrap; font-size: 13px; }

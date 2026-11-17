@@ -9,8 +9,11 @@
     <div><dt>Destino</dt><dd>{{ objeto.destino }}</dd></div>
     <div><dt>Data de saída</dt><dd>{{ objeto.data_saida|date:"d/m/Y" }}</dd></div>
     <div><dt>Data de retorno</dt><dd>{{ objeto.data_retorno|date:"d/m/Y" }}</dd></div>
-    <div><dt>Distância</dt><dd>{{ objeto.distancia }}</dd></div>
+    <div><dt>Quilometragem de saída</dt><dd>{% if objeto.km_saida != None %}{{ objeto.km_saida|floatformat:2 }} km{% else %}Não informada{% endif %}</dd></div>
+    <div><dt>Quilometragem de chegada</dt><dd>{% if objeto.km_chegada != None %}{{ objeto.km_chegada|floatformat:2 }} km{% else %}Não informada{% endif %}</dd></div>
+    <div><dt>Distância percorrida</dt><dd>{{ objeto.distancia|floatformat:2 }} km</dd></div>
     <div><dt>Valor do frete</dt><dd>R$ {{ objeto.valor_frete|floatformat:2 }}</dd></div>
+    <div><dt>Total de despesas da viagem</dt><dd>R$ {{ objeto.total_despesas|floatformat:2 }}</dd></div>
     <div><dt>Resultado</dt><dd>R$ {{ objeto.valor_resultado|floatformat:2 }}</dd></div>
     <div><dt>Status</dt><dd>{{ objeto.status }}</dd></div>
 {% endblock %}

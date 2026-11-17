@@ -21,10 +21,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Personalização visual -->
-    <link rel="stylesheet" href="{% static 'css/modernizacao.css' %}?v=20261117-3">
-    <link rel="stylesheet" href="{% static 'css/interface.css' %}?v=20261117-1">
+    <link rel="stylesheet" href="{% static 'css/modernizacao.css' %}?v=20261117-4">
+
 
     {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/interface.css' %}?v=20261117-2">
 </head>
 
 <body class="{% if user.is_authenticated %}nav-md{% else %}login{% endif %}">

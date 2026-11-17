@@ -2,4 +2,5 @@
 {% block title %}{% if objeto %}Editar viagem{% else %}Cadastrar viagem{% endif %} | Controle de Frota{% endblock %}
 {% block form_heading %}{% if objeto %}Editar viagem{% else %}Cadastrar viagem{% endif %}{% endblock %}
 {% block form_panel_title %}Dados da viagem{% endblock %}
+{% block form_description %}O resultado é calculado automaticamente: valor do frete menos as despesas vinculadas à viagem.{% endblock %}
 {% block form_actions %}{% include 'partials/form_actions.html' with cancel_url='viagem_list' %}{% endblock %}
