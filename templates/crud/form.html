@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="standard-page {% block form_page_class %}{% endblock %}">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>{% block form_heading %}Dados do registro{% endblock %}</h3>
+            <p>{% block form_description %}Preencha os campos abaixo. Os campos com * são obrigatórios.{% endblock %}</p>
+        </div>
+    </div>
+    <div class="x_panel standard-form-panel">
+        <div class="x_title"><h2>{% block form_panel_title %}Informações do cadastro{% endblock %}</h2><div class="clearfix"></div></div>
+        <div class="x_content">
+            <form method="post" class="standard-form">
+                {% csrf_token %}
+                {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+                {% include 'partials/form_fields.html' %}
+                <div class="form-actions">{% block form_actions %}{% endblock %}</div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% if form.non_field_errors %}
+<div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>
+{% endif %}
+{% for hidden in form.hidden_fields %}
+    {{ hidden }}
+    {% if hidden.errors %}<div class="alert alert-danger" role="alert">{{ hidden.errors }}</div>{% endif %}
+{% endfor %}
+<div class="standard-form-fields">
+    {% for field in form.visible_fields %}
+    <div class="standard-field{% if field.errors %} has-error{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span class="required-mark" aria-hidden="true">*</span>{% endif %}</label>
+        {{ field }}
+        {% if field.help_text %}<div class="field-help" id="{{ field.auto_id }}_helptext">{{ field.help_text|safe }}</div>{% endif %}
+        {% if field.errors %}<ul class="errorlist" id="{{ field.auto_id }}_error">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+    </div>
+    {% endfor %}
+</div>

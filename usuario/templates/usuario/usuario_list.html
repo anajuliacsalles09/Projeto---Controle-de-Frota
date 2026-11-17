@@ -12,9 +12,9 @@
     </div>
 
     <div class="title_right">
-        <a href="{% url 'usuario_create' %}" class="btn btn-primary pull-right">
+        {% if perms.usuario.add_usuario %}<a href="{% url 'usuario_create' %}" class="btn btn-success pull-right">
             <i class="fa fa-user-plus"></i> Novo usuário
-        </a>
+        </a>{% endif %}
     </div>
 </div>
 
@@ -24,7 +24,7 @@
 <div class="row">
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Total de usuários</h4>
                 <h2>{{ quantidade_usuarios|default:"0" }}</h2>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Administradores</h4>
                 <h2>{{ quantidade_administradores|default:"0" }}</h2>
@@ -42,7 +42,7 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Funcionários</h4>
                 <h2>{{ quantidade_funcionarios|default:"0" }}</h2>
@@ -67,16 +67,16 @@
 
                 <div class="table-responsive">
 
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-hover">
 
                         <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>Usuário</th>
-                                <th>E-mail</th>
-                                <th>CPF</th>
-                                <th>Perfil</th>
-                                <th>Ações</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Usuário</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">CPF</th>
+                                <th scope="col">Perfil</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
 
@@ -97,19 +97,7 @@
                                     {% endif %}
                                 </td>
 
-                                <td>
-                                    <a href="{% url 'usuario_detail' objeto.pk %}" class="btn btn-info btn-sm" title="Visualizar">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-
-                                    <a href="{% url 'usuario_update' objeto.pk %}" class="btn btn-warning btn-sm" title="Editar">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-
-                                    <a href="{% url 'usuario_delete' objeto.pk %}" class="btn btn-danger btn-sm" title="Excluir">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
+                                <td>{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='usuario_detail' update_url='usuario_update' delete_url='usuario_delete' list_url='usuario_list' can_edit=perms.usuario.change_usuario can_delete=perms.usuario.delete_usuario %}</td>
                             </tr>
 
                             {% empty %}

@@ -1,63 +1,12 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Detalhes do Abastecimento | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Detalhes do Abastecimento</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Informações do abastecimento</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p><strong>ID:</strong> {{ objeto.id }}</p>
-                        <p><strong>Veículo:</strong> {{ objeto.veiculo }}</p>
-                        <p><strong>Litros:</strong> {{ objeto.litros }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p><strong>Valor:</strong> R$ {{ objeto.valor }}</p>
-                        <p><strong>Data:</strong> {{ objeto.data }}</p>
-                        <p><strong>Tipo de combustível:</strong> {{ objeto.tipo_combustivel }}</p>
-                    </div>
-
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <a href="{% url 'abastecimento_update' objeto.pk %}" class="btn btn-warning">
-                    <i class="fa fa-edit"></i> Editar
-                </a>
-
-                <a href="{% url 'abastecimento_delete' objeto.pk %}" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Excluir
-                </a>
-
-                <a href="{% url 'abastecimento_list' %}" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> Voltar
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes do abastecimento | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes do abastecimento{% endblock %}
+{% block record_panel_title %}Dados do abastecimento{% endblock %}
+{% block record_fields %}
+    <div><dt>Veículo</dt><dd>{{ objeto.veiculo }}</dd></div>
+    <div><dt>Litros</dt><dd>{{ objeto.litros }}</dd></div>
+    <div><dt>Valor</dt><dd>R$ {{ objeto.valor|floatformat:2 }}</dd></div>
+    <div><dt>Data</dt><dd>{{ objeto.data|date:"d/m/Y" }}</dd></div>
+    <div><dt>Combustível</dt><dd>{{ objeto.tipo_combustivel }}</dd></div>
 {% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='abastecimento_detail' update_url='abastecimento_update' delete_url='abastecimento_delete' list_url='abastecimento_list' can_edit=perms.abastecimento.change_abastecimento can_delete=perms.abastecimento.delete_abastecimento %}{% endblock %}

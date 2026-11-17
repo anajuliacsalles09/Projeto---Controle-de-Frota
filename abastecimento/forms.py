@@ -32,7 +32,7 @@ class AbastecimentoForm(forms.ModelForm):
                 'placeholder': 'Valor do abastecimento'
             }),
 
-            'data': forms.DateInput(attrs={
+            'data': forms.DateInput(format='%Y-%m-%d', attrs={
                 'class': 'form-control',
                 'type': 'date'
             }),

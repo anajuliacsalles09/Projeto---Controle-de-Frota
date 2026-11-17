@@ -1,0 +1,6 @@
+<div class="record-actions{% if compact %} record-actions-compact{% endif %}">
+    {% if show_view %}<a href="{% url detail_url objeto.pk %}" class="btn btn-info btn-sm" title="Visualizar" aria-label="Visualizar registro"><i class="fa fa-eye" aria-hidden="true"></i><span class="sr-only">Visualizar</span></a>{% endif %}
+    {% if can_edit %}<a href="{% url update_url objeto.pk %}" class="btn btn-warning{% if compact %} btn-sm{% endif %}" title="Editar" aria-label="Editar registro"><i class="fa fa-pencil" aria-hidden="true"></i>{% if compact %}<span class="sr-only">Editar</span>{% else %} Editar{% endif %}</a>{% endif %}
+    {% if can_delete %}<a href="{% url delete_url objeto.pk %}" class="btn btn-danger{% if compact %} btn-sm{% endif %}" title="Excluir" aria-label="Excluir registro"><i class="fa fa-trash" aria-hidden="true"></i>{% if compact %}<span class="sr-only">Excluir</span>{% else %} Excluir{% endif %}</a>{% endif %}
+    {% if not compact %}<a href="{% url list_url %}" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Voltar para a lista</a>{% endif %}
+</div>

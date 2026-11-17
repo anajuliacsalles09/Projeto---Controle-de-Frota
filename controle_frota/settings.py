@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
+from django.contrib.messages import constants as messages
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +25,10 @@ if not SECRET_KEY:
     SECRET_KEY = secret_key_file.read_text(encoding='utf-8').strip()
 
 DEBUG = True
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 ALLOWED_HOSTS = []
 
@@ -135,4 +140,4 @@ LOGIN_URL = '/usuarios/login/'
 
 LOGIN_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = '/usuarios/login/'
+LOGOUT_REDIRECT_URL = '/'

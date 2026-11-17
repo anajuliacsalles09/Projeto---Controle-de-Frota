@@ -1,67 +1,17 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Detalhes da Viagem | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Detalhes da Viagem</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Informações da viagem</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p><strong>Usuário:</strong> {{ objeto.usuario }}</p>
-                        <p><strong>Veículo:</strong> {{ objeto.veiculo }}</p>
-                        <p><strong>Origem:</strong> {{ objeto.origem }}</p>
-                        <p><strong>Destino:</strong> {{ objeto.destino }}</p>
-                        <p><strong>Data de saída:</strong> {{ objeto.data_saida }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p><strong>Data de retorno:</strong> {{ objeto.data_retorno }}</p>
-                        <p><strong>Distância:</strong> {{ objeto.distancia }}</p>
-                        <p><strong>Valor do frete:</strong> R$ {{ objeto.valor_frete }}</p>
-                        <p><strong>Valor do resultado:</strong> R$ {{ objeto.valor_resultado }}</p>
-                        <p><strong>Status:</strong> {{ objeto.status }}</p>
-                    </div>
-
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <a href="{% url 'viagem_update' objeto.pk %}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i> Editar
-                </a>
-
-                <a href="{% url 'viagem_delete' objeto.pk %}" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Excluir
-                </a>
-
-                <a href="{% url 'viagem_list' %}" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> Voltar
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes da viagem | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes da viagem{% endblock %}
+{% block record_panel_title %}Dados da viagem{% endblock %}
+{% block record_fields %}
+    <div><dt>Usuário</dt><dd>{{ objeto.usuario }}</dd></div>
+    <div><dt>Veículo</dt><dd>{{ objeto.veiculo }}</dd></div>
+    <div><dt>Origem</dt><dd>{{ objeto.origem }}</dd></div>
+    <div><dt>Destino</dt><dd>{{ objeto.destino }}</dd></div>
+    <div><dt>Data de saída</dt><dd>{{ objeto.data_saida|date:"d/m/Y" }}</dd></div>
+    <div><dt>Data de retorno</dt><dd>{{ objeto.data_retorno|date:"d/m/Y" }}</dd></div>
+    <div><dt>Distância</dt><dd>{{ objeto.distancia }}</dd></div>
+    <div><dt>Valor do frete</dt><dd>R$ {{ objeto.valor_frete|floatformat:2 }}</dd></div>
+    <div><dt>Resultado</dt><dd>R$ {{ objeto.valor_resultado|floatformat:2 }}</dd></div>
+    <div><dt>Status</dt><dd>{{ objeto.status }}</dd></div>
 {% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='viagem_detail' update_url='viagem_update' delete_url='viagem_delete' list_url='viagem_list' can_edit=perms.viagem.change_viagem can_delete=perms.viagem.delete_viagem %}{% endblock %}

@@ -1,65 +1,18 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Detalhes do Usuário | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Detalhes do Usuário</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Informações do usuário</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p><strong>Nome:</strong> {{ objeto.nome }}</p>
-                        <p><strong>CPF:</strong> {{ objeto.cpf }}</p>
-                        <p><strong>Telefone:</strong> {{ objeto.telefone }}</p>
-                        <p><strong>Rua:</strong> {{ objeto.rua }}</p>
-                        <p><strong>Bairro:</strong> {{ objeto.bairro }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p><strong>CEP:</strong> {{ objeto.cep }}</p>
-                        <p><strong>Número:</strong> {{ objeto.numero }}</p>
-                        <p><strong>Logradouro:</strong> {{ objeto.logradouro }}</p>
-                    </div>
-
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <a href="{% url 'usuario_update' objeto.pk %}" class="btn btn-warning">
-                    <i class="fa fa-pencil"></i> Editar
-                </a>
-
-                <a href="{% url 'usuario_delete' objeto.pk %}" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Excluir
-                </a>
-
-                <a href="{% url 'usuario_list' %}" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> Voltar
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes do usuário | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes do usuário{% endblock %}
+{% block record_panel_title %}Dados do usuário{% endblock %}
+{% block record_fields %}
+    <div><dt>Nome</dt><dd>{{ objeto.nome }}</dd></div>
+    <div><dt>Usuário</dt><dd>{{ objeto.username }}</dd></div>
+    <div><dt>E-mail</dt><dd>{{ objeto.email }}</dd></div>
+    <div><dt>Perfil</dt><dd>{{ objeto.get_tipo_display }}</dd></div>
+    <div><dt>CPF</dt><dd>{{ objeto.cpf }}</dd></div>
+    <div><dt>Telefone</dt><dd>{{ objeto.telefone }}</dd></div>
+    <div><dt>Rua</dt><dd>{{ objeto.rua }}</dd></div>
+    <div><dt>Bairro</dt><dd>{{ objeto.bairro }}</dd></div>
+    <div><dt>CEP</dt><dd>{{ objeto.cep }}</dd></div>
+    <div><dt>Número</dt><dd>{{ objeto.numero }}</dd></div>
+    <div><dt>Logradouro</dt><dd>{{ objeto.logradouro }}</dd></div>
 {% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='usuario_detail' update_url='usuario_update' delete_url='usuario_delete' list_url='usuario_list' can_edit=perms.usuario.change_usuario can_delete=perms.usuario.delete_usuario %}{% endblock %}

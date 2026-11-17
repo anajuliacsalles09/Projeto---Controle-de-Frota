@@ -11,9 +11,9 @@
     </div>
 
     <div class="title_right">
-        <a href="{% url 'manutencao_create' %}" class="btn btn-primary pull-right">
+        {% if perms.manutencao.add_manutencao %}<a href="{% url 'manutencao_create' %}" class="btn btn-success pull-right">
             <i class="fa fa-plus"></i> Nova manutenção
-        </a>
+        </a>{% endif %}
     </div>
 </div>
 
@@ -22,7 +22,7 @@
 <div class="row">
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Total de manutenções</h4>
                 <h2>{{ quantidade_manutencoes|default:"0" }}</h2>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Manutenções cadastradas</h4>
                 <h2>{{ quantidade_manutencoes|default:"0" }}</h2>
@@ -40,10 +40,10 @@
     </div>
 
     <div class="col-md-4 col-sm-4">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <h4>Valor total</h4>
-                <h2>R$ {{ valor_total|default:"0" }}</h2>
+                <h2>R$ {{ valor_total|default:"0"|floatformat:2 }}</h2>
             </div>
         </div>
     </div>
@@ -62,15 +62,15 @@
 
             <div class="x_content">
 
-                <table class="table table-striped table-bordered">
+                <div class="table-responsive"><table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Veículo</th>
-                            <th>Tipo</th>
-                            <th>Descrição</th>
-                            <th>Data</th>
-                            <th>Valor</th>
-                            <th>Ações</th>
+                            <th scope="col">Veículo</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">Ações</th>
                         </tr>
                     </thead>
 
@@ -80,13 +80,9 @@
                             <td>{{ manutencao.veiculo }}</td>
                             <td>{{ manutencao.tipo }}</td>
                             <td>{{ manutencao.descricao }}</td>
-                            <td>{{ manutencao.data }}</td>
-                            <td>R$ {{ manutencao.valor }}</td>
-                            <td>
-                                <a href="{% url 'manutencao_detail' manutencao.pk %}" class="btn btn-info btn-xs">
-                                    Ver detalhes
-                                </a>
-                            </td>
+                            <td>{{ manutencao.data|date:"d/m/Y" }}</td>
+                            <td>R$ {{ manutencao.valor|floatformat:2 }}</td>
+                            <td>{% include 'partials/record_actions.html' with objeto=manutencao compact=True show_view=True detail_url='manutencao_detail' update_url='manutencao_update' delete_url='manutencao_delete' list_url='manutencao_list' can_edit=perms.manutencao.change_manutencao can_delete=perms.manutencao.delete_manutencao %}</td>
                         </tr>
 
                         {% empty %}
@@ -95,7 +91,7 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                </table></div>
 
             </div>
         </div>

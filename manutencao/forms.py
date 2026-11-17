@@ -30,7 +30,7 @@ class ManutencaoForm(forms.ModelForm):
                 'placeholder': 'Descrição da manutenção'
             }),
 
-            'data': forms.DateInput(attrs={
+            'data': forms.DateInput(format='%Y-%m-%d', attrs={
                 'class': 'form-control',
                 'type': 'date'
             }),

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="standard-page">
+    <div class="page-title"><div class="title_left"><h3>{% block record_heading %}Detalhes do registro{% endblock %}</h3></div></div>
+    <div class="x_panel standard-record-panel">
+        <div class="x_title">
+            <h2>{% block record_panel_title %}Informações do registro{% endblock %}</h2>
+            <span class="record-id">Registro #{{ objeto.pk }}</span>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            {% block record_intro %}{% endblock %}
+            <dl class="record-grid">{% block record_fields %}{% endblock %}</dl>
+            <div class="form-actions">{% block record_actions %}{% endblock %}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

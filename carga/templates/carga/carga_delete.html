@@ -1,60 +1,10 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Excluir Carga | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Excluir Carga</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Confirmar exclusão</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <p>Tem certeza que deseja excluir esta carga?</p>
-
-                <p>
-                    <strong>Descrição:</strong> {{ objeto.descricao }}
-                    <br>
-
-                    <strong>Peso:</strong> {{ objeto.peso }}
-                    <br>
-
-                    <strong>Valor:</strong> R$ {{ objeto.valor }}
-                </p>
-
-                <div class="ln_solid"></div>
-
-                <form method="POST">
-                    {% csrf_token %}
-
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fa fa-trash"></i> Sim, excluir
-                    </button>
-
-                    <a href="{% url 'carga_detail' objeto.pk %}" class="btn btn-primary">
-                        <i class="fa fa-arrow-left"></i> Cancelar
-                    </a>
-
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/delete.html' %}
+{% block title %}Excluir carga | Controle de Frota{% endblock %}
+{% block record_heading %}Excluir carga{% endblock %}
+{% block record_fields %}
+    <div><dt>Viagem</dt><dd>{{ objeto.viagem }}</dd></div>
+    <div><dt>Descrição</dt><dd>{{ objeto.descricao }}</dd></div>
+    <div><dt>Peso</dt><dd>{{ objeto.peso }}</dd></div>
+    <div><dt>Valor</dt><dd>R$ {{ objeto.valor|floatformat:2 }}</dd></div>
 {% endblock %}
+{% block delete_cancel %}<a href="{% url 'carga_detail' objeto.pk %}" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar</a>{% endblock %}

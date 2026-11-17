@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 
 from .models import Veiculo
 from .forms import VeiculoForm
@@ -13,7 +14,7 @@ def veiculo_list(request):
     return render(
         request,
         'veiculo/veiculo_list.html',
-        {'objetos': objetos}
+        {'objetos': objetos, 'quantidade_veiculos': objetos.count()}
     )
 
 
@@ -25,7 +26,10 @@ def veiculo_create(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Veículo cadastrado com sucesso!')
             return redirect('veiculo_list')
+        else:
+            messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
 
     else:
         form = VeiculoForm()
@@ -59,7 +63,10 @@ def veiculo_update(request, pk):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Veículo atualizado com sucesso!')
             return redirect('veiculo_detail', pk=objeto.pk)
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
 
     else:
         form = VeiculoForm(instance=objeto)
@@ -81,6 +88,7 @@ def veiculo_delete(request, pk):
 
     if request.method == 'POST':
         objeto.delete()
+        messages.success(request, 'Veículo excluído com sucesso!')
         return redirect('veiculo_list')
 
     return render(

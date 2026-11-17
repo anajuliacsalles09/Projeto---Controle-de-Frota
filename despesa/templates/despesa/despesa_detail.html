@@ -1,59 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Detalhes da Despesa</title>
-</head>
-<body>
-
-    <h1>Detalhes da Despesa</h1>
-
-    <p>
-        <strong>ID:</strong>
-        {{ objeto.id }}
-    </p>
-
-    <p>
-        <strong>Viagem:</strong>
-        {{ objeto.viagem }}
-    </p>
-
-    <p>
-        <strong>Tipo:</strong>
-        {{ objeto.tipo }}
-    </p>
-
-    <p>
-        <strong>Descrição:</strong>
-        {{ objeto.descricao }}
-    </p>
-
-    <p>
-        <strong>Valor:</strong>
-        {{ objeto.valor }}
-    </p>
-
-    <p>
-        <strong>Data:</strong>
-        {{ objeto.data }}
-    </p>
-
-    <br>
-
-    <a href="{% url 'despesa_update' objeto.pk %}">
-        Editar
-    </a>
-
-    |
-
-    <a href="{% url 'despesa_delete' objeto.pk %}">
-        Excluir
-    </a>
-
-    |
-
-    <a href="{% url 'despesa_list' %}">
-        Voltar para a lista
-    </a>
-
-</body>
-</html>
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes da despesa | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes da despesa{% endblock %}
+{% block record_panel_title %}Dados da despesa{% endblock %}
+{% block record_fields %}
+    <div><dt>Viagem</dt><dd>{{ objeto.viagem }}</dd></div>
+    <div><dt>Tipo</dt><dd>{{ objeto.tipo }}</dd></div>
+    <div><dt>Descrição</dt><dd>{{ objeto.descricao }}</dd></div>
+    <div><dt>Valor</dt><dd>R$ {{ objeto.valor|floatformat:2 }}</dd></div>
+    <div><dt>Data</dt><dd>{{ objeto.data|date:"d/m/Y" }}</dd></div>
+{% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='despesa_detail' update_url='despesa_update' delete_url='despesa_delete' list_url='despesa_list' can_edit=perms.despesa.change_despesa can_delete=perms.despesa.delete_despesa %}{% endblock %}

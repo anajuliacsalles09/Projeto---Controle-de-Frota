@@ -37,7 +37,7 @@ class DespesaForm(forms.ModelForm):
                 'min': '0',
             }),
 
-            'data': forms.DateInput(attrs={
+            'data': forms.DateInput(format='%Y-%m-%d', attrs={
                 'class': 'form-control',
                 'type': 'date',
             }),

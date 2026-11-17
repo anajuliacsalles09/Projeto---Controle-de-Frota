@@ -1,54 +1,12 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Detalhes da Manutenção | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Detalhes da Manutenção</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Informações da manutenção</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p><strong>Veículo:</strong> {{ manutencao.veiculo }}</p>
-                        <p><strong>Tipo:</strong> {{ manutencao.tipo }}</p>
-                        <p><strong>Descrição:</strong> {{ manutencao.descricao }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p><strong>Data:</strong> {{ manutencao.data }}</p>
-                        <p><strong>Valor:</strong> R$ {{ manutencao.valor }}</p>
-                    </div>
-
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <a href="{% url 'manutencao_list' %}" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> Voltar
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes da manutenção | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes da manutenção{% endblock %}
+{% block record_panel_title %}Dados da manutenção{% endblock %}
+{% block record_fields %}
+    <div><dt>Veículo</dt><dd>{{ objeto.veiculo }}</dd></div>
+    <div><dt>Tipo</dt><dd>{{ objeto.tipo }}</dd></div>
+    <div><dt>Descrição</dt><dd>{{ objeto.descricao }}</dd></div>
+    <div><dt>Data</dt><dd>{{ objeto.data|date:"d/m/Y" }}</dd></div>
+    <div><dt>Valor</dt><dd>R$ {{ objeto.valor|floatformat:2 }}</dd></div>
 {% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='manutencao_detail' update_url='manutencao_update' delete_url='manutencao_delete' list_url='manutencao_list' can_edit=perms.manutencao.change_manutencao can_delete=perms.manutencao.delete_manutencao %}{% endblock %}

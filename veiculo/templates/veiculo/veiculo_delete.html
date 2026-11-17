@@ -1,49 +1,11 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Excluir Veículo | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Excluir Veículo</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Confirmar exclusão</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <p>Tem certeza que deseja excluir o veículo {{ objeto.placa }}?</p>
-
-                <form method="POST">
-                    {% csrf_token %}
-
-                    <button type="submit" class="btn btn-danger">
-                        Excluir
-                    </button>
-
-                    <a href="{% url 'veiculo_list' %}" class="btn btn-primary">
-                        Cancelar
-                    </a>
-
-                </form>
-
-            </div>
-        </div>
-
-    </div>
-</div>
-
+{% extends 'crud/delete.html' %}
+{% block title %}Excluir veículo | Controle de Frota{% endblock %}
+{% block record_heading %}Excluir veículo{% endblock %}
+{% block record_fields %}
+    <div><dt>Placa</dt><dd>{{ objeto.placa }}</dd></div>
+    <div><dt>Modelo</dt><dd>{{ objeto.modelo }}</dd></div>
+    <div><dt>Marca</dt><dd>{{ objeto.marca }}</dd></div>
+    <div><dt>Status</dt><dd>{{ objeto.status }}</dd></div>
 {% endblock %}
+{% block delete_notice %}A exclusão não pode ser desfeita e também remove os registros vinculados. Confira os dados antes de confirmar.{% endblock %}
+{% block delete_cancel %}<a href="{% url 'veiculo_detail' objeto.pk %}" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar</a>{% endblock %}

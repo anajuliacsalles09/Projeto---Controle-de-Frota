@@ -1,131 +1,148 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Dashboard | Controle de Frota{% endblock %}
+{% block title %}Painel inicial | Controle de Frota{% endblock %}
 
-{% block content %}
-
-<!-- TÍTULO DO DASHBOARD -->
-<div class="page-title">
-    <div class="title_left">
-        <h3>Painel de Controle</h3>
-        <p>Bem-vindo ao sistema de gerenciamento da frota.</p>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<!-- INDICADORES PRINCIPAIS -->
-<div class="row">
-
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel dashboard-card">
-            <div class="x_content">
-                <span class="card-label">Veículos cadastrados</span>
-                <h2>{{ total_veiculos }}</h2>
-                <i class="fa fa-truck card-icon"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel dashboard-card">
-            <div class="x_content">
-                <span class="card-label">Viagens registradas</span>
-                <h2>{{ total_viagens }}</h2>
-                <i class="fa fa-road card-icon"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel dashboard-card">
-            <div class="x_content">
-                <span class="card-label">Abastecimentos</span>
-                <h2>{{ total_abastecimentos }}</h2>
-                <i class="fa fa-tint card-icon"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel dashboard-card">
-            <div class="x_content">
-                <span class="card-label">Manutenções</span>
-                <h2>{{ total_manutencoes }}</h2>
-                <i class="fa fa-wrench card-icon"></i>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- RESUMO E ACESSO RÁPIDO -->
-<div class="row">
-
-    <div class="col-md-6 col-sm-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Resumo do sistema</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <p>
-                    <i class="fa fa-users"></i>
-                    <strong>Usuários cadastrados:</strong>
-                    {{ total_usuarios }}
-                </p>
-
-                <p>
-                    <i class="fa fa-cubes"></i>
-                    <strong>Cargas registradas:</strong>
-                    {{ total_cargas }}
-                </p>
-
-                <p>
-                    <i class="fa fa-money"></i>
-                    <strong>Despesas registradas:</strong>
-                    {{ total_despesas }}
-                </p>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-sm-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Acesso rápido</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <p>Selecione uma ação para acessar rapidamente o sistema.</p>
-
-                <a href="{% url 'veiculo_create' %}" class="btn btn-primary">
-                    <i class="fa fa-plus"></i>
-                    Novo veículo
-                </a>
-
-                <a href="{% url 'viagem_create' %}" class="btn btn-success">
-                    <i class="fa fa-road"></i>
-                    Nova viagem
-                </a>
-
-                <a href="{% url 'despesa_create' %}" class="btn btn-warning">
-                    <i class="fa fa-money"></i>
-                    Nova despesa
-                </a>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=20261117-2">
 {% endblock %}
 
+{% block content %}
+<div class="fleet-dashboard">
+    <div class="fleet-dashboard-heading">
+        <div>
+            <h1>Painel de controle</h1>
+            <p>Uma visão geral das operações da sua frota.</p>
+        </div>
+        <span class="fleet-breadcrumb"><i class="fa fa-home" aria-hidden="true"></i> Início / Painel</span>
+    </div>
 
+    <section class="fleet-welcome" aria-labelledby="welcome-title">
+        <span class="fleet-welcome-eyebrow">CONTROLE DE FROTA</span>
+        {% if user.is_authenticated %}
+        <h2 id="welcome-title">Olá, {{ user.usuario.nome|default:user.username }}!</h2>
+        {% else %}
+        <h2 id="welcome-title">Bem-vindo ao Controle de Frota</h2>
+        {% endif %}
+        <p>
+            {% if public_dashboard %}
+                Consulte os indicadores e os últimos registros da frota. Entre ou cadastre-se para registrar suas operações.
+            {% elif perms.usuario.view_usuario %}
+                Acompanhe a frota, consulte os últimos registros e gerencie as operações por aqui.
+            {% else %}
+                Consulte sua frota e registre viagens, abastecimentos, manutenções e despesas em um só lugar.
+            {% endif %}
+        </p>
+    </section>
+
+    {% if indicadores %}
+    <section class="fleet-metrics" aria-label="Indicadores da frota">
+        {% for indicador in indicadores %}
+        <article class="fleet-metric">
+            <div class="fleet-metric-body">
+                <span class="fleet-metric-symbol"><i class="fa fa-{{ indicador.icon }}" aria-hidden="true"></i></span>
+                <p>{{ indicador.label }}</p>
+                <strong>{{ indicador.total }}</strong>
+            </div>
+            <a href="{{ indicador.url }}" class="fleet-metric-link">
+                {{ indicador.link_label }} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </article>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    <div class="fleet-dashboard-columns">
+        <div>
+            {% if public_dashboard or perms.viagem.view_viagem %}
+            <section class="fleet-panel" aria-labelledby="recent-trips-title">
+                <div class="fleet-panel-heading">
+                    <h2 id="recent-trips-title"><i class="fa fa-road" aria-hidden="true"></i>Viagens mais recentes</h2>
+                    <a href="{% url 'viagem_list' %}">Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Origem e destino</th>
+                                <th scope="col">Veículo</th>
+                                <th scope="col">Saída</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for viagem in viagens_recentes %}
+                            <tr>
+                                <td><a href="{% url 'viagem_detail' viagem.pk %}" class="fleet-route">{{ viagem.origem }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {{ viagem.destino }}</a></td>
+                                <td>{{ viagem.veiculo.placa }}</td>
+                                <td class="text-nowrap">{{ viagem.data_saida|date:"d/m/Y" }}</td>
+                                <td><span class="fleet-status">{{ viagem.status }}</span></td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4"><div class="fleet-empty">Nenhuma viagem cadastrada ainda.</div></td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            {% endif %}
+
+            {% if public_dashboard or perms.despesa.view_despesa %}
+            <section class="fleet-panel" aria-labelledby="recent-expenses-title">
+                <div class="fleet-panel-heading">
+                    <h2 id="recent-expenses-title"><i class="fa fa-money" aria-hidden="true"></i>Últimas despesas</h2>
+                    <a href="{% url 'despesa_list' %}">Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </div>
+                <ul class="fleet-panel-list">
+                    {% for despesa in despesas_recentes %}
+                    <li>
+                        <a href="{% url 'despesa_detail' despesa.pk %}">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                            <span class="fleet-list-main">{{ despesa.tipo }}<small>{{ despesa.viagem.origem }} — {{ despesa.viagem.destino }} · {{ despesa.data|date:"d/m/Y" }}</small></span>
+                            <strong>R$ {{ despesa.valor|floatformat:2 }}</strong>
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="fleet-empty">Nenhuma despesa cadastrada ainda.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if not indicadores and not resumo and not atalhos %}
+            <section class="fleet-panel">
+                <p class="fleet-empty">Sua conta ainda não possui acesso aos módulos. Solicite as permissões ao administrador.</p>
+            </section>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if atalhos %}
+            <section class="fleet-panel fleet-panel-accent" aria-labelledby="quick-actions-title">
+                <div class="fleet-panel-heading">
+                    <h2 id="quick-actions-title"><i class="fa fa-plus-circle" aria-hidden="true"></i>Acesso rápido</h2>
+                </div>
+                <ul class="fleet-panel-list">
+                    {% for atalho in atalhos %}
+                    <li><a href="{{ atalho.url }}"><i class="fa fa-{{ atalho.icon }}" aria-hidden="true"></i><span class="fleet-list-main">{{ atalho.label }}</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            {% if resumo %}
+            <section class="fleet-panel fleet-panel-summary" aria-labelledby="summary-title">
+                <div class="fleet-panel-heading">
+                    <h2 id="summary-title"><i class="fa fa-bar-chart" aria-hidden="true"></i>Resumo do sistema</h2>
+                </div>
+                <ul class="fleet-panel-list">
+                    {% for item in resumo %}
+                    <li><a href="{{ item.url }}"><i class="fa fa-{{ item.icon }}" aria-hidden="true"></i><span class="fleet-list-main">{{ item.label }}</span><strong class="fleet-list-count">{{ item.total }}</strong></a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

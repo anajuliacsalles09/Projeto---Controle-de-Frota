@@ -1,0 +1,12 @@
+{% extends 'crud/detail.html' %}
+{% block record_panel_title %}Confirmar exclusão{% endblock %}
+{% block record_intro %}
+<div class="delete-notice"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><div><strong>Deseja excluir este registro?</strong><p>{% block delete_notice %}Confira os dados abaixo antes de confirmar. Esta ação não pode ser desfeita.{% endblock %}</p></div></div>
+{% endblock %}
+{% block record_actions %}
+<form method="post" class="delete-actions">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Confirmar exclusão</button>
+    {% block delete_cancel %}{% endblock %}
+</form>
+{% endblock %}

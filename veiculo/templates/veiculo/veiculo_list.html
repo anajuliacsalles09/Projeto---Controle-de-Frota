@@ -11,9 +11,9 @@
     </div>
 
     <div class="title_right">
-        <a href="{% url 'veiculo_create' %}" class="btn btn-primary pull-right">
+        {% if perms.veiculo.add_veiculo %}<a href="{% url 'veiculo_create' %}" class="btn btn-success pull-right">
             <i class="fa fa-plus"></i> Novo veículo
-        </a>
+        </a>{% endif %}
     </div>
 </div>
 
@@ -23,11 +23,11 @@
 <div class="row">
 
     <div class="col-md-6 col-sm-6">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-car fa-3x" style="color: #3498db;"></i>
+                        <i class="fa fa-car fa-3x"></i>
                     </div>
                     <div class="col-xs-9">
                         <h2>{{ quantidade_veiculos|default:"0" }}</h2>
@@ -39,11 +39,11 @@
     </div>
 
     <div class="col-md-6 col-sm-6">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-list-alt fa-3x" style="color: #26b99a;"></i>
+                        <i class="fa fa-list-alt fa-3x"></i>
                     </div>
                     <div class="col-xs-9">
                         <h2>{{ quantidade_veiculos|default:"0" }}</h2>
@@ -75,14 +75,14 @@
 
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Placa</th>
-                                <th>Modelo</th>
-                                <th>Marca</th>
-                                <th>Ano</th>
-                                <th>Quilometragem</th>
-                                <th>Status</th>
-                                <th>Ações</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Placa</th>
+                                <th scope="col">Modelo</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Ano</th>
+                                <th scope="col">Quilometragem</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
 
@@ -99,25 +99,7 @@
                                 <td>{{ objeto.quilometragem }}</td>
                                 <td>{{ objeto.status }}</td>
 
-                                <td>
-                                    <a href="{% url 'veiculo_detail' objeto.pk %}"
-                                       class="btn btn-info btn-xs"
-                                       title="Visualizar">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-
-                                    <a href="{% url 'veiculo_update' objeto.pk %}"
-                                       class="btn btn-warning btn-xs"
-                                       title="Editar">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-
-                                    <a href="{% url 'veiculo_delete' objeto.pk %}"
-                                       class="btn btn-danger btn-xs"
-                                       title="Excluir">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
+                                <td>{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='veiculo_detail' update_url='veiculo_update' delete_url='veiculo_delete' list_url='veiculo_list' can_edit=perms.veiculo.change_veiculo can_delete=perms.veiculo.delete_veiculo %}</td>
                             </tr>
 
                             {% empty %}

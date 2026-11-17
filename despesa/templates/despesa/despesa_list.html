@@ -11,9 +11,9 @@
     </div>
 
     <div class="title_right">
-        <a href="{% url 'despesa_create' %}" class="btn btn-primary pull-right">
+        {% if perms.despesa.add_despesa %}<a href="{% url 'despesa_create' %}" class="btn btn-success pull-right">
             <i class="fa fa-plus"></i> Nova despesa
-        </a>
+        </a>{% endif %}
     </div>
 </div>
 
@@ -23,11 +23,11 @@
 <div class="row">
 
     <div class="col-md-6 col-sm-6">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-money fa-3x" style="color: #3498db;"></i>
+                        <i class="fa fa-money fa-3x"></i>
                     </div>
                     <div class="col-xs-9">
                         <h2>
@@ -41,11 +41,11 @@
     </div>
 
     <div class="col-md-6 col-sm-6">
-        <div class="x_panel">
+        <div class="x_panel record-stat">
             <div class="x_content">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-list-alt fa-3x" style="color: #26b99a;"></i>
+                        <i class="fa fa-list-alt fa-3x"></i>
                     </div>
                     <div class="col-xs-9">
                         <h2>{{ quantidade_despesas|default:"0" }}</h2>
@@ -77,13 +77,13 @@
 
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Viagem</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
-                                <th>Valor</th>
-                                <th>Data</th>
-                                <th>Ações</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Viagem</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
 
@@ -99,25 +99,7 @@
                                 <td>R$ {{ objeto.valor|floatformat:2 }}</td>
                                 <td>{{ objeto.data|date:"d/m/Y" }}</td>
 
-                                <td>
-                                    <a href="{% url 'despesa_detail' objeto.pk %}"
-                                       class="btn btn-info btn-xs"
-                                       title="Visualizar">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-
-                                    <a href="{% url 'despesa_update' objeto.pk %}"
-                                       class="btn btn-warning btn-xs"
-                                       title="Editar">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-
-                                    <a href="{% url 'despesa_delete' objeto.pk %}"
-                                       class="btn btn-danger btn-xs"
-                                       title="Excluir">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
+                                <td>{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='despesa_detail' update_url='despesa_update' delete_url='despesa_delete' list_url='despesa_list' can_edit=perms.despesa.change_despesa can_delete=perms.despesa.delete_despesa %}</td>
                             </tr>
 
                             {% empty %}

@@ -1,65 +1,14 @@
-
-{% extends 'base.html' %}
-
-{% block title %}Detalhes do Veículo | Controle de Frota{% endblock %}
-
-{% block content %}
-
-<div class="page-title">
-    <div class="title_left">
-        <h3>Detalhes do Veículo</h3>
-    </div>
-</div>
-
-<div class="clearfix"></div>
-
-<div class="row">
-    <div class="col-md-12 col-sm-12">
-
-        <div class="x_panel">
-
-            <div class="x_title">
-                <h2>Informações do veículo</h2>
-                <div class="clearfix"></div>
-            </div>
-
-            <div class="x_content">
-
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <p><strong>ID:</strong> {{ objeto.id }}</p>
-                        <p><strong>Placa:</strong> {{ objeto.placa }}</p>
-                        <p><strong>Modelo:</strong> {{ objeto.modelo }}</p>
-                        <p><strong>Marca:</strong> {{ objeto.marca }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p><strong>Ano:</strong> {{ objeto.ano }}</p>
-                        <p><strong>Quilometragem:</strong> {{ objeto.quilometragem }} km</p>
-                        <p><strong>Status:</strong> {{ objeto.status }}</p>
-                        <p><strong>Capacidade de carga:</strong> {{ objeto.capacidade_carga }}</p>
-                    </div>
-
-                </div>
-
-                <div class="ln_solid"></div>
-
-                <a href="{% url 'veiculo_update' objeto.pk %}" class="btn btn-warning">
-                    <i class="fa fa-edit"></i> Editar
-                </a>
-
-                <a href="{% url 'veiculo_delete' objeto.pk %}" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Excluir
-                </a>
-
-                <a href="{% url 'veiculo_list' %}" class="btn btn-primary">
-                    <i class="fa fa-arrow-left"></i> Voltar
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-
+{% extends 'crud/detail.html' %}
+{% block title %}Detalhes do veículo | Controle de Frota{% endblock %}
+{% block record_heading %}Detalhes do veículo{% endblock %}
+{% block record_panel_title %}Dados do veículo{% endblock %}
+{% block record_fields %}
+    <div><dt>Placa</dt><dd>{{ objeto.placa }}</dd></div>
+    <div><dt>Modelo</dt><dd>{{ objeto.modelo }}</dd></div>
+    <div><dt>Marca</dt><dd>{{ objeto.marca }}</dd></div>
+    <div><dt>Ano</dt><dd>{{ objeto.ano }}</dd></div>
+    <div><dt>Quilometragem</dt><dd>{{ objeto.quilometragem }}</dd></div>
+    <div><dt>Status</dt><dd>{{ objeto.status }}</dd></div>
+    <div><dt>Capacidade de carga</dt><dd>{{ objeto.capacidade_carga }}</dd></div>
 {% endblock %}
+{% block record_actions %}{% include 'partials/record_actions.html' with detail_url='veiculo_detail' update_url='veiculo_update' delete_url='veiculo_delete' list_url='veiculo_list' can_edit=perms.veiculo.change_veiculo can_delete=perms.veiculo.delete_veiculo %}{% endblock %}

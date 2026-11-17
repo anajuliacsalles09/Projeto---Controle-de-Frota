@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 from django.db.models import Sum
 
 from .models import Despesa
@@ -32,7 +33,10 @@ def despesa_create(request):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Despesa cadastrada com sucesso!')
             return redirect('despesa_list')
+        else:
+            messages.error(request, 'Não foi possível cadastrar. Verifique os campos.')
     else:
         form = DespesaForm()
 
@@ -61,7 +65,10 @@ def despesa_update(request, pk):
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Despesa atualizada com sucesso!')
             return redirect('despesa_detail', pk=objeto.pk)
+        else:
+            messages.error(request, 'Não foi possível atualizar. Verifique os campos.')
     else:
         form = DespesaForm(instance=objeto)
 
@@ -78,6 +85,7 @@ def despesa_delete(request, pk):
 
     if request.method == 'POST':
         objeto.delete()
+        messages.success(request, 'Despesa excluída com sucesso!')
         return redirect('despesa_list')
 
     return render(request, 'despesa/despesa_delete.html', {
