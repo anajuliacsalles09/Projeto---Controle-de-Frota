@@ -83,3 +83,43 @@
     .right_col .x_panel { padding: 18px 15px; }
     .form-actions { gap: 8px; }
 }
+
+
+/* Ações das tabelas: cores normais e ao passar o mouse */
+
+/* EDITAR */
+.table .record-actions .btn-warning {
+    color: #2874C8;
+    background: #E5EFFB;
+    border-color: #C5D9F0;
+    transition: all .25s ease;
+}
+
+.table .record-actions .btn-warning:hover,
+.table .record-actions .btn-warning:focus {
+    color: #205A9C;
+    background: #D3E4F7;
+    border-color: #AFC9E8;
+}
+
+/* EXCLUIR */
+.table .record-actions .btn-danger {
+    color: #C74740;
+    background: #FCE8E7;
+    border-color: #F0C7C3;
+    transition: all .25s ease;
+}
+
+.table .record-actions .btn-danger:hover,
+.table .record-actions .btn-danger:focus {
+    color: #A8322C;
+    background: #F5D2CF;
+    border-color: #E5AAA5;
+}
+
+/* Mantém os ícones visíveis */
+.table .record-actions .btn-warning i,
+.table .record-actions .btn-danger i {
+    opacity: 1 !important;
+}
+

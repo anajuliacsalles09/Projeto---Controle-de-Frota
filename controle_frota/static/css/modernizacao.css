@@ -850,3 +850,21 @@ footer {
 }
 
 
+/* AUMENTA A LARGURA DO MENU LATERAL */
+.nav-md .container.body .col-md-3.left_col {
+    width: 270px;
+}
+
+.nav-md .container.body .right_col {
+    margin-left: 270px;
+}
+
+.nav-md .container.body .top_nav {
+    margin-left: 270px;
+}
+
+.nav-md footer {
+    margin-left: 270px;
+}
+
+
