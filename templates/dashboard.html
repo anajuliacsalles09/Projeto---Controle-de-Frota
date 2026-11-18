@@ -1,29 +1,35 @@
+
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Painel inicial | Controle de Frota{% endblock %}
+{% block title %}Página principal | Controle de Frota{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=20261117-2">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=20261117-3">
 {% endblock %}
 
 {% block content %}
 <div class="fleet-dashboard">
     <div class="fleet-dashboard-heading">
         <div>
-            <h1>Painel de controle</h1>
-            <p>Uma visão geral das operações da sua frota.</p>
+            <h1>Página principal</h1>
+            <p>Acompanhe as informações e operações da sua frota.</p>
         </div>
-        <span class="fleet-breadcrumb"><i class="fa fa-home" aria-hidden="true"></i> Início / Painel</span>
+        <span class="fleet-breadcrumb">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            Início / Página principal
+        </span>
     </div>
 
     <section class="fleet-welcome" aria-labelledby="welcome-title">
         <span class="fleet-welcome-eyebrow">CONTROLE DE FROTA</span>
+
         {% if user.is_authenticated %}
-        <h2 id="welcome-title">Olá, {{ user.usuario.nome|default:user.username }}!</h2>
+            <h2 id="welcome-title">Olá, {{ user.usuario.nome|default:user.username }}!</h2>
         {% else %}
-        <h2 id="welcome-title">Bem-vindo ao Controle de Frota</h2>
+            <h2 id="welcome-title">Bem-vindo ao Controle de Frota</h2>
         {% endif %}
+
         <p>
             {% if perms.usuario.view_usuario %}
                 Acompanhe a frota, consulte os últimos registros e gerencie as operações por aqui.
@@ -38,12 +44,15 @@
         {% for indicador in indicadores %}
         <article class="fleet-metric">
             <div class="fleet-metric-body">
-                <span class="fleet-metric-symbol"><i class="fa fa-{{ indicador.icon }}" aria-hidden="true"></i></span>
+                <span class="fleet-metric-symbol">
+                    <i class="fa fa-{{ indicador.icon }}" aria-hidden="true"></i>
+                </span>
                 <p>{{ indicador.label }}</p>
                 <strong>{{ indicador.total }}</strong>
             </div>
             <a href="{{ indicador.url }}" class="fleet-metric-link">
-                {{ indicador.link_label }} <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                {{ indicador.link_label }}
+                <i class="fa fa-arrow-right" aria-hidden="true"></i>
             </a>
         </article>
         {% endfor %}
@@ -55,9 +64,15 @@
             {% if perms.viagem.view_viagem %}
             <section class="fleet-panel" aria-labelledby="recent-trips-title">
                 <div class="fleet-panel-heading">
-                    <h2 id="recent-trips-title"><i class="fa fa-road" aria-hidden="true"></i>Viagens mais recentes</h2>
-                    <a href="{% url 'viagem_list' %}">Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <h2 id="recent-trips-title">
+                        <i class="fa fa-road" aria-hidden="true"></i>
+                        Viagens mais recentes
+                    </h2>
+                    <a href="{% url 'viagem_list' %}">
+                        Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
                 </div>
+
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -71,13 +86,25 @@
                         <tbody>
                             {% for viagem in viagens_recentes %}
                             <tr>
-                                <td><a href="{% url 'viagem_detail' viagem.pk %}" class="fleet-route">{{ viagem.origem }} <i class="fa fa-long-arrow-right" aria-hidden="true"></i> {{ viagem.destino }}</a></td>
+                                <td>
+                                    <a href="{% url 'viagem_detail' viagem.pk %}" class="fleet-route">
+                                        {{ viagem.origem }}
+                                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                        {{ viagem.destino }}
+                                    </a>
+                                </td>
                                 <td>{{ viagem.veiculo.placa }}</td>
                                 <td class="text-nowrap">{{ viagem.data_saida|date:"d/m/Y" }}</td>
-                                <td><span class="fleet-status">{{ viagem.status }}</span></td>
+                                <td>
+                                    <span class="fleet-status">{{ viagem.status }}</span>
+                                </td>
                             </tr>
                             {% empty %}
-                            <tr><td colspan="4"><div class="fleet-empty">Nenhuma viagem cadastrada ainda.</div></td></tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="fleet-empty">Nenhuma viagem cadastrada ainda.</div>
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -88,15 +115,27 @@
             {% if perms.despesa.view_despesa %}
             <section class="fleet-panel" aria-labelledby="recent-expenses-title">
                 <div class="fleet-panel-heading">
-                    <h2 id="recent-expenses-title"><i class="fa fa-money" aria-hidden="true"></i>Últimas despesas</h2>
-                    <a href="{% url 'despesa_list' %}">Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <h2 id="recent-expenses-title">
+                        <i class="fa fa-money" aria-hidden="true"></i>
+                        Últimas despesas
+                    </h2>
+                    <a href="{% url 'despesa_list' %}">
+                        Ver todas <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
                 </div>
+
                 <ul class="fleet-panel-list">
                     {% for despesa in despesas_recentes %}
                     <li>
                         <a href="{% url 'despesa_detail' despesa.pk %}">
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                            <span class="fleet-list-main">{{ despesa.tipo }}<small>{{ despesa.viagem.origem }} — {{ despesa.viagem.destino }} · {{ despesa.data|date:"d/m/Y" }}</small></span>
+                            <span class="fleet-list-main">
+                                {{ despesa.tipo }}
+                                <small>
+                                    {{ despesa.viagem.origem }} — {{ despesa.viagem.destino }} ·
+                                    {{ despesa.data|date:"d/m/Y" }}
+                                </small>
+                            </span>
                             <strong>R$ {{ despesa.valor|floatformat:2 }}</strong>
                         </a>
                     </li>
@@ -109,7 +148,9 @@
 
             {% if not indicadores and not resumo and not atalhos %}
             <section class="fleet-panel">
-                <p class="fleet-empty">Sua conta ainda não possui acesso aos módulos. Solicite as permissões ao administrador.</p>
+                <p class="fleet-empty">
+                    Sua conta ainda não possui acesso aos módulos. Solicite as permissões ao administrador.
+                </p>
             </section>
             {% endif %}
         </div>
@@ -118,11 +159,21 @@
             {% if atalhos %}
             <section class="fleet-panel fleet-panel-accent" aria-labelledby="quick-actions-title">
                 <div class="fleet-panel-heading">
-                    <h2 id="quick-actions-title"><i class="fa fa-plus-circle" aria-hidden="true"></i>Acesso rápido</h2>
+                    <h2 id="quick-actions-title">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Acesso rápido
+                    </h2>
                 </div>
+
                 <ul class="fleet-panel-list">
                     {% for atalho in atalhos %}
-                    <li><a href="{{ atalho.url }}"><i class="fa fa-{{ atalho.icon }}" aria-hidden="true"></i><span class="fleet-list-main">{{ atalho.label }}</span><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li>
+                        <a href="{{ atalho.url }}">
+                            <i class="fa fa-{{ atalho.icon }}" aria-hidden="true"></i>
+                            <span class="fleet-list-main">{{ atalho.label }}</span>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </section>
@@ -131,11 +182,21 @@
             {% if resumo %}
             <section class="fleet-panel fleet-panel-summary" aria-labelledby="summary-title">
                 <div class="fleet-panel-heading">
-                    <h2 id="summary-title"><i class="fa fa-bar-chart" aria-hidden="true"></i>Resumo do sistema</h2>
+                    <h2 id="summary-title">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        Resumo do sistema
+                    </h2>
                 </div>
+
                 <ul class="fleet-panel-list">
                     {% for item in resumo %}
-                    <li><a href="{{ item.url }}"><i class="fa fa-{{ item.icon }}" aria-hidden="true"></i><span class="fleet-list-main">{{ item.label }}</span><strong class="fleet-list-count">{{ item.total }}</strong></a></li>
+                    <li>
+                        <a href="{{ item.url }}">
+                            <i class="fa fa-{{ item.icon }}" aria-hidden="true"></i>
+                            <span class="fleet-list-main">{{ item.label }}</span>
+                            <strong class="fleet-list-count">{{ item.total }}</strong>
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </section>

@@ -5,15 +5,21 @@
 
 {% block content %}
 
-<div class="page-title">
+<!-- CABEÇALHO DA PÁGINA -->
+<div class="page-title module-page-title">
     <div class="title_left">
-        <h3>Veículos <small>Gerenciamento de veículos da frota</small></h3>
+        <h1 class="module-title">Veículos</h1>
+        <p class="module-subtitle">
+            Gerenciamento de veículos da frota.
+        </p>
     </div>
 
     <div class="title_right">
-        {% if perms.veiculo.add_veiculo %}<a href="{% url 'veiculo_create' %}" class="btn btn-success pull-right">
-            <i class="fa fa-plus"></i> Novo veículo
-        </a>{% endif %}
+        {% if perms.veiculo.add_veiculo %}
+            <a href="{% url 'veiculo_create' %}" class="btn btn-primary pull-right">
+                <i class="fa fa-plus"></i> Novo veículo
+            </a>
+        {% endif %}
     </div>
 </div>
 
@@ -99,7 +105,9 @@
                                 <td>{{ objeto.quilometragem }}</td>
                                 <td>{{ objeto.status }}</td>
 
-                                <td>{% include 'partials/record_actions.html' with compact=True show_view=True detail_url='veiculo_detail' update_url='veiculo_update' delete_url='veiculo_delete' list_url='veiculo_list' can_edit=perms.veiculo.change_veiculo can_delete=perms.veiculo.delete_veiculo %}</td>
+                                <td>
+                                    {% include 'partials/record_actions.html' with compact=True show_view=True detail_url='veiculo_detail' update_url='veiculo_update' delete_url='veiculo_delete' list_url='veiculo_list' can_edit=perms.veiculo.change_veiculo can_delete=perms.veiculo.delete_veiculo %}
+                                </td>
                             </tr>
 
                             {% empty %}

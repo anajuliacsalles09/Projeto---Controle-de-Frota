@@ -5,7 +5,12 @@
 }
 .right_col .page-title .title_left { width: auto; min-width: 0; float: none; }
 .right_col .page-title .title_right { width: auto; float: none; flex-shrink: 0; }
-.right_col .page-title h3 { margin: 0; font-size: 25px; }
+.right_col .page-title h3 {
+    margin: 0 0 8px;
+    font-size: 27px;
+    font-weight: 600;
+    color: var(--sidebar) !important;
+}
 .right_col .page-title h3 small { display: block; width: auto; margin: 8px 0 0; font-size: 12px; color: var(--muted); }
 .right_col .page-title p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
 .right_col .x_panel { border-radius: 14px; box-shadow: 0 2px 8px rgba(35,52,71,.025); }
@@ -76,7 +81,9 @@
 .custom-alert { display: block; padding: 15px 45px 15px 18px; }
 @media (max-width: 767px) {
     .right_col .page-title { align-items: flex-start; flex-wrap: wrap; gap: 14px; }
-    .right_col .page-title h3 { font-size: 22px; }
+    .right_col .page-title h3 {
+    font-size: 23px;
+}
     .right_col .page-title .title_right .pull-right { float: none !important; }
     .standard-form-fields, .record-grid { grid-template-columns: minmax(0, 1fr); }
     .standard-form-fields { gap: 18px; }
@@ -141,4 +148,20 @@
 .table .record-actions .btn-warning i,
 .table .record-actions .btn-danger i {
     opacity: 1 !important;
+}
+
+.right_col .page-title.module-page-title {
+    margin-top: 20px;
+}
+
+.right_col .page-title.module-page-title .module-title {
+    margin: 0 0 8px;
+    font-size: 27px;
+    font-weight: 600;
+    color: var(--sidebar);
+}
+
+.right_col .page-title.module-page-title .module-subtitle {
+    margin: 0;
+    color: var(--muted);
 }
